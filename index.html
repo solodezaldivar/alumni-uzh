@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UZH Alumni Informatik – Netzwerk, Events, Sponsoren</title>
+  <meta name="description" content="Alumni Informatik Universität Zürich: Netzwerk, Events, Sponsoren & Kontakt." />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="/uploads/favicon.png">
+</head>
+<body>
+<!-- Site Header -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="Startseite">
+      <img src="/uploads/alumni_logo_header.png" alt="UZH Alumni Informatik - Alumni.ch" height="36">
+    </a>
+    <nav class="nav">
+      <a href="#about">Über uns</a>
+      <a href="#events">Events</a>
+      <a href="#sponsors">Sponsoren</a>
+      <a href="#contact" class="btn btn-primary">Kontakt</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section id="top" class="section hero">
+  <div class="container hero-inner">
+    <h1>Alumni Informatik UZH</h1>
+    <p class="lead">
+      Netzwerk, Austausch und Karriereimpulse für Absolvent:innen der Informatik an der Universität Zürich.
+    </p>
+    <div class="hero-cta">
+      <a href="#events" class="btn btn-primary">Nächste Events</a>
+      <a href="#contact" class="btn btn-ghost">Kontakt aufnehmen</a>
+    </div>
+  </div>
+  <div class="hero-bg" aria-hidden="true"></div>
+</section>
+
+<!-- About -->
+<section id="about" class="section section-alt">
+  <div class="container grid-2">
+    <div>
+      <h2>Über uns</h2>
+      <p>
+        Seit 1997 verbindet der UZH Alumni Informatik (UZH.AI) Ehemalige, Studierende und das
+        <a href="https://www.ifi.uzh.ch" target="_blank" rel="noopener">Institut für Informatik</a>.
+        Wir fördern Vernetzung, Mentoring und lebenslanges Lernen durch Events, Inhalte und Partnerschaften.
+      </p>
+      <ul class="checklist">
+        <li>Networking-Anlässe & Fachvorträge</li>
+        <li>Brücke zwischen Alumni, IfI und Wirtschaft</li>
+        <li>Partnerschaften & Sponsoring-Möglichkeiten</li>
+      </ul>
+    </div>
+    <aside class="card">
+      <h3>Werde Mitglied</h3>
+      <p>Teil der Community werden und Vorteile nutzen.</p>
+      <a class="btn btn-primary" href="#contact">Interesse melden</a>
+    </aside>
+  </div>
+</section>
+
+<!-- Events -->
+<section id="events" class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Events</h2>
+      <div class="filters">
+        <input id="q" class="input" placeholder="Suche nach Titel, Ort, Tags …" />
+        <select id="scope" class="input">
+          <option value="upcoming" selected>Bevorstehend</option>
+          <option value="past">Vergangen</option>
+          <option value="all">Alle</option>
+        </select>
+        <input id="tag" class="input" placeholder="Tag-Filter (z.B. networking)" />
+      </div>
+    </div>
+
+    <div id="eventsList" class="cards"></div>
+    <p id="eventsCount" class="muted"></p>
+
+    <div class="section-cta">
+      <a class="btn btn-ghost" href="/api/ics.php" target="_blank" rel="noopener">Als Kalender abonnieren (.ics)</a>
+      <a class="btn" href="/admin/" target="_blank" rel="noopener">Admin</a>
+    </div>
+  </div>
+</section>
+
+<!-- Sponsors -->
+<section id="sponsors" class="section section-alt">
+  <div class="container">
+    <h2>Sponsoren & Partner</h2>
+    <p class="muted">Danke an unsere Unterstützer:innen.</p>
+    <div class="logo-grid">
+      <!-- Replace placeholder paths with your actual logos in /uploads/ -->
+      <img src="/uploads/logo_createq.png" alt="Sponsor Createq" />
+      <img src="/uploads/logo_migrosbank.png" alt="Sponsor Migros Bank" />
+      <img src="/uploads/logo_zkb.png" alt="Sponsor Zürcher Kantonalbank" />
+      <img src="/uploads/logo_ausbildung-weiterbildung.jpg" alt="Sponsor Ausbildung-weiterbildung.ch" />
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section">
+  <div class="container grid-2">
+    <div>
+      <h2>Kontakt</h2>
+      <p>Fragen zu Mitgliedschaft, Partnerschaft oder Events? Schreiben Sie uns.</p>
+      <ul class="contact-points">
+        <li><strong>E-Mail:</strong> kontakt@alumni.ch;</li>
+        <li><strong>Adresse:</strong> UZH Alumni Informatik, 8000 Zürich</li>
+      </ul>
+    </div>
+    <form id="contactForm" class="card" method="post" action="/api/contact.php" novalidate>
+      <div class="grid-2">
+        <label>Vorname<span class="req">*</span>
+          <input name="first" required>
+        </label>
+        <label>Nachname<span class="req">*</span>
+          <input name="last" required>
+        </label>
+      </div>
+      <label>E-Mail<span class="req">*</span>
+        <input type="email" name="email" required>
+      </label>
+      <label>Betreff<span class="req">*</span>
+        <input name="subject" required>
+      </label>
+      <label>Nachricht<span class="req">*</span>
+        <textarea name="message" rows="6" required></textarea>
+      </label>
+
+      <!-- CSRF + honeypot -->
+      <input type="hidden" name="csrf" id="csrf">
+      <input type="text" name="company" class="hp" autocomplete="off" tabindex="-1" aria-hidden="true">
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Senden</button>
+        <p id="contactStatus" class="muted" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <p>© <span id="y"></span> UZH Alumni Informatik · Zürich</p>
+    <nav class="footer-nav">
+      <a href="#top">Top</a>
+      <a href="#" onclick="alert('Impressum folgt');return false;">Impressum</a>
+      <a href="#" onclick="alert('Nutzungsbedingungen folgen');return false;">Nutzungs­bedingungen</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.nav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  // Year
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // CSRF for contact form (simple per-load token)
+  const token = (Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2));
+  document.getElementById('csrf').value = token;
+  sessionStorage.setItem('csrf', token);
+
+  // Events render (inline; no /js file needed)
+  (async function renderEvents() {
+    const list = document.getElementById('eventsList');
+    const count = document.getElementById('eventsCount');
+    const q = document.getElementById('q');
+    const scope = document.getElementById('scope');
+    const tag = document.getElementById('tag');
+
+    let all = [];
+    try {
+      const res = await fetch('/events.json', { cache: 'no-cache' });
+      all = await res.json();
+    } catch (e) {
+      list.innerHTML = `<p>Events konnten nicht geladen werden.</p>`;
+      return;
+    }
+    all = Array.isArray(all) ? all : [];
+
+    const fmt = new Intl.DateTimeFormat(undefined, {
+      weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+
+    function escapeHtml(s) {
+      return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;')
+              .replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+    }
+
+    function filterAndRender() {
+      const now = new Date();
+      const text = q.value.trim().toLowerCase();
+      const tagq = tag.value.trim().toLowerCase();
+
+      let items = all.slice();
+
+      if (scope.value === 'upcoming') items = items.filter(e => new Date(e.start) >= now);
+      else if (scope.value === 'past') items = items.filter(e => new Date(e.start) < now);
+
+      if (text) {
+        items = items.filter(e =>
+                (e.title ?? '').toLowerCase().includes(text) ||
+                (e.location ?? '').toLowerCase().includes(text) ||
+                (e.description ?? '').toLowerCase().includes(text) ||
+                (e.tags ?? []).join(' ').toLowerCase().includes(text)
+        );
+      }
+      if (tagq) {
+        items = items.filter(e => (e.tags ?? []).some(x => String(x).toLowerCase().includes(tagq)));
+      }
+
+      items.sort((a,b) => a.start.localeCompare(b.start));
+
+      if (!items.length) {
+        list.innerHTML = `<p>Keine passenden Events gefunden.</p>`;
+        count.textContent = '';
+        return;
+      }
+
+      list.innerHTML = items.map(e => {
+        const start = new Date(e.start);
+        const end = e.end ? new Date(e.end) : null;
+        const when = end ? `${fmt.format(start)} – ${fmt.format(end)}` : fmt.format(start);
+        const img = e.image ? `<img loading="lazy" src="${e.image}" alt="">` : '';
+        const url = e.url ? `<p><a class="btn btn-ghost" href="${e.url}" target="_blank" rel="noopener">Infos / Anmeldung</a></p>` : '';
+        const tags = (e.tags ?? []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
+        return `
+          <article class="card event-card">
+            ${img}
+            <div class="event-body">
+              <h3>${escapeHtml(e.title ?? '')}</h3>
+              <div class="muted">${when}${e.location ? ' · ' + escapeHtml(e.location) : ''}</div>
+              ${e.description ? `<p>${escapeHtml(e.description)}</p>` : ''}
+              <div class="event-actions">${url}${tags ? `<div class="tags">${tags}</div>` : ''}</div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      count.textContent = `${items.length} Event${items.length===1?'':'s'} angezeigt`;
+    }
+
+    q.addEventListener('input', filterAndRender);
+    scope.addEventListener('change', filterAndRender);
+    tag.addEventListener('input', filterAndRender);
+    filterAndRender();
+  })();
+
+  // Contact form progressive enhancement (AJAX submit)
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('contactStatus');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.textContent = 'Senden …';
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: data });
+      const json = await res.json();
+      if (json.ok) {
+        status.textContent = 'Danke! Wir melden uns.';
+        form.reset();
+        // refresh token
+        const t = Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);
+        document.getElementById('csrf').value = t; sessionStorage.setItem('csrf', t);
+      } else {
+        status.textContent = json.error || 'Senden fehlgeschlagen.';
+      }
+    } catch(err) {
+      status.textContent = 'Netzwerkfehler.';
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Restricted Area"
+AuthUserFile /home_pr7/a/l/alumni.ch/pwd/.htpasswd
+Require valid-user

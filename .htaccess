@@ -1,0 +1,16 @@
+# Force HTTPS (adjust if your host terminates TLS before Apache)
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Sensible caching for static assets
+<FilesMatch "\.(js|css|png|jpg|jpeg|webp|gif|svg|ico)$">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+
+# Never cache JSON (so events update immediately)
+<FilesMatch "\.(json)$">
+  Header set Cache-Control "no-cache, no-store, must-revalidate"
+  Header set Pragma "no-cache"
+  Header set Expires "0"
+</FilesMatch>
