@@ -4,139 +4,293 @@ session_start();
 
 header('Content-Type: application/json; charset=utf-8');
 
-// --- CONFIG ---
-$EVENTS_FILE = __DIR__ . '/../events.json';
-$UPLOAD_DIR  = __DIR__ . '/../uploads';
-$BASE_URL    = '/uploads'; // public path
-$MAX_IMAGE_BYTES = 2 * 1024 * 1024; // 2 MB
-$ALLOWED_MIME = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
-$TZ = new DateTimeZone('Europe/Zurich');
+// Enable error logging but don't display errors in production
+ini_set('display_errors', '0');
+error_reporting(E_ALL);
 
-// --- CSRF ---
-if (empty($_POST['csrf']) || empty($_SESSION['csrf']) || !hash_equals($_SESSION['csrf'], $_POST['csrf'])) {
-  http_response_code(400);
-  echo json_encode(['ok' => false, 'error' => 'Invalid CSRF token']);
-  exit;
+$EVENTS_FILE = __DIR__ . '/../events.json';
+$UPLOAD_DIR = __DIR__ . '/../uploads';
+$TZ = new DateTimeZone('Europe/Zurich');
+$MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+$ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
+/**
+ * Send JSON response and exit
+ */
+function jsonResponse(bool $ok, string $message = '', array $data = []): void
+{
+    $payload = array_merge([
+        'ok' => $ok,
+        'error' => $ok ? '' : $message,
+        'message' => $message,
+        'csrf' => $_SESSION['csrf'] ?? null,
+    ], $data);
+
+    echo json_encode($payload);
+    exit;
 }
 
-// --- AUTH (optional extra check) ---
-// If /admin is already Basic-Auth protected, this is optional. Uncomment if you want hard-fail when no auth headers.
-// if (empty($_SERVER['PHP_AUTH_USER'])) { http_response_code(401); exit; }
+/**
+ * Validate CSRF token
+ */
+function validateCsrf(): bool
+{
+    if (empty($_SESSION['csrf'])) {
+        $_SESSION['csrf'] = bin2hex(random_bytes(32));
+    }
 
-// --- INPUT ---
-$title = trim((string)($_POST['title'] ?? ''));
-$startLocal = trim((string)($_POST['start'] ?? ''));
-$endLocal = trim((string)($_POST['end'] ?? ''));
-$location = trim((string)($_POST['location'] ?? ''));
-$url = trim((string)($_POST['url'] ?? ''));
-$tags = array_filter(array_map('trim', explode(',', (string)($_POST['tags'] ?? ''))));
-$description = trim((string)($_POST['description'] ?? ''));
+    if (empty($_POST['csrf'])) {
+        return false;
+    }
+
+    if (!hash_equals($_SESSION['csrf'], $_POST['csrf'])) {
+        $_SESSION['csrf'] = bin2hex(random_bytes(32));
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Load events from JSON file with locking
+ */
+function loadEvents(string $file): array
+{
+    if (!file_exists($file)) {
+        file_put_contents($file, '[]', LOCK_EX);
+        return [];
+    }
+
+    $handle = fopen($file, 'r');
+    if (!$handle) {
+        return [];
+    }
+
+    flock($handle, LOCK_SH);
+    $content = fread($handle, filesize($file) ?: 1);
+    $data = json_decode($content, true);
+    flock($handle, LOCK_UN);
+    fclose($handle);
+
+    return is_array($data) ? $data : [];
+}
+
+/**
+ * Save events atomically
+ */
+function saveEvents(string $file, array $events): bool
+{
+    $tmp = $file . '.tmp.' . bin2hex(random_bytes(8));
+    $json = json_encode($events, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+    if (file_put_contents($tmp, $json, LOCK_EX) === false) {
+        return false;
+    }
+
+    return rename($tmp, $file);
+}
+
+/**
+ * Validate and sanitize string input
+ */
+function sanitizeInput(string $input, int $maxLength = 0): string
+{
+    $input = trim($input);
+    if ($maxLength > 0 && mb_strlen($input) > $maxLength) {
+        $input = mb_substr($input, 0, $maxLength);
+    }
+    return $input;
+}
+
+/**
+ * Validate URL
+ */
+function isValidUrl(?string $url): bool
+{
+    if (!$url || trim($url) === '') {
+        return true;
+    }
+    return filter_var($url, FILTER_VALIDATE_URL) !== false;
+}
+
+/**
+ * Convert local datetime to ISO format
+ */
+function localToIso(string $local, DateTimeZone $tz): ?string
+{
+    try {
+        $dt = DateTime::createFromFormat('Y-m-d\TH:i', $local, $tz);
+        return $dt ? $dt->format(DateTime::ATOM) : null;
+    } catch (Exception $e) {
+        return null;
+    }
+}
+
+/**
+ * Generate safe filename
+ */
+function safeFilename(string $title, string $extension): string
+{
+    $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title), '-'));
+    $slug = substr($slug, 0, 50);
+    $hash = substr(bin2hex(random_bytes(4)), 0, 8);
+    return $slug . '-' . $hash . '.' . $extension;
+}
+
+/**
+ * Process and optimize uploaded image
+ */
+function processImage(array $file, string $uploadDir): ?string
+{
+    global $MAX_FILE_SIZE, $ALLOWED_TYPES;
+
+    // Check for upload errors
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        return null;
+    }
+
+    // Check file size
+    if ($file['size'] > $MAX_FILE_SIZE) {
+        return null;
+    }
+
+    // Check MIME type
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mimeType = finfo_file($finfo, $file['tmp_name']);
+    finfo_close($finfo);
+
+    if (!in_array($mimeType, $ALLOWED_TYPES)) {
+        return null;
+    }
+
+    // Determine extension
+    $extension = match($mimeType) {
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp',
+        default => null
+    };
+
+    if (!$extension) {
+        return null;
+    }
+
+    // Generate safe filename
+    $filename = safeFilename($_POST['title'] ?? 'event', $extension);
+    $targetPath = $uploadDir . '/' . $filename;
+
+    // Move uploaded file
+    if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
+        return null;
+    }
+
+    // Optional: Optimize image (requires GD or ImageMagick)
+    // This is a placeholder - implement based on your server capabilities
+
+    return '/uploads/' . $filename;
+}
+
+// Check request method
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsonResponse(false, 'Ungültige Anfragemethode');
+}
+
+// Validate CSRF
+if (!validateCsrf()) {
+    jsonResponse(false, 'Ungültiges CSRF-Token');
+}
 
 // Validate required fields
-if ($title === '' || $startLocal === '') {
-  http_response_code(422);
-  echo json_encode(['ok' => false, 'error' => 'title and start are required']);
-  exit;
+$title = sanitizeInput($_POST['title'] ?? '', 140);
+$start = sanitizeInput($_POST['start'] ?? '', 50);
+$end = sanitizeInput($_POST['end'] ?? '', 50);
+
+if (empty($title)) {
+    jsonResponse(false, 'Titel ist erforderlich');
 }
 
-// Convert local datetime (YYYY-MM-DDTHH:MM) to ISO with timezone
-function localToIso(string $local, DateTimeZone $tz): string {
-  $dt = DateTime::createFromFormat('Y-m-d\TH:i', $local, $tz);
-  if (!$dt) { throw new RuntimeException('Invalid datetime'); }
-  return $dt->format(DateTime::ATOM); // ISO 8601 with offset
+if (empty($start)) {
+    jsonResponse(false, 'Startdatum ist erforderlich');
 }
 
-try {
-  $startIso = localToIso($startLocal, $TZ);
-  $endIso = $endLocal !== '' ? localToIso($endLocal, $TZ) : null;
-} catch (Throwable $e) {
-  http_response_code(422);
-  echo json_encode(['ok' => false, 'error' => 'Invalid date format']);
-  exit;
+if (empty($end)) {
+    jsonResponse(false, 'Enddatum ist erforderlich');
 }
 
-// URL sanity
-if ($url !== '' && !filter_var($url, FILTER_VALIDATE_URL)) {
-  http_response_code(422);
-  echo json_encode(['ok' => false, 'error' => 'Invalid URL']);
-  exit;
+// Convert dates
+$startIso = localToIso($start, $TZ);
+$endIso = localToIso($end, $TZ);
+
+if (!$startIso) {
+    jsonResponse(false, 'Ungültiges Startdatum');
 }
 
-// --- IMAGE UPLOAD (optional) ---
-$imagePublicPath = null;
-if (!empty($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
-  if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
-    http_response_code(400);
-    echo json_encode(['ok' => false, 'error' => 'Upload error']);
-    exit;
-  }
-  if ($_FILES['image']['size'] > $MAX_IMAGE_BYTES) {
-    http_response_code(413);
-    echo json_encode(['ok' => false, 'error' => 'Image too large']);
-    exit;
-  }
-  $finfo = new finfo(FILEINFO_MIME_TYPE);
-  $mime = $finfo->file($_FILES['image']['tmp_name']);
-  if (!isset($ALLOWED_MIME[$mime])) {
-    http_response_code(415);
-    echo json_encode(['ok' => false, 'error' => 'Unsupported image type']);
-    exit;
-  }
-  if (!is_dir($UPLOAD_DIR)) {
-    if (!mkdir($UPLOAD_DIR, 0755, true)) {
-      http_response_code(500);
-      echo json_encode(['ok' => false, 'error' => 'Upload dir not writable']);
-      exit;
+if (!$endIso) {
+    jsonResponse(false, 'Ungültiges Enddatum');
+}
+
+// Validate end is after start
+if ($endIso <= $startIso) {
+    jsonResponse(false, 'Enddatum muss nach Startdatum liegen');
+}
+
+// Validate optional fields
+$location = sanitizeInput($_POST['location'] ?? '', 140);
+$url = sanitizeInput($_POST['url'] ?? '', 500);
+$description = sanitizeInput($_POST['description'] ?? '', 5000);
+$tagsRaw = sanitizeInput($_POST['tags'] ?? '', 500);
+
+if (!isValidUrl($url)) {
+    jsonResponse(false, 'Ungültiges URL-Format');
+}
+
+// Parse tags
+$tags = array_values(array_filter(
+    array_map('trim', explode(',', $tagsRaw)),
+    fn($t) => !empty($t) && mb_strlen($t) <= 50
+));
+
+// Process image if provided
+$imagePath = null;
+if (!empty($_FILES['image']['name'])) {
+    $imagePath = processImage($_FILES['image'], $UPLOAD_DIR);
+    if (!$imagePath) {
+        jsonResponse(false, 'Bild konnte nicht hochgeladen werden (max. 2 MB, nur JPG/PNG/WebP)');
     }
-  }
-  // Generate a safe filename
-  $slug = preg_replace('~[^a-z0-9]+~i', '-', strtolower($title));
-  $datePart = substr($startIso, 0, 10);
-  $ext = $ALLOWED_MIME[$mime];
-  $filename = sprintf('%s-%s-%s.%s', $datePart, $slug, bin2hex(random_bytes(4)), $ext);
-  $dest = $UPLOAD_DIR . '/' . $filename;
-  if (!move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
-    http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'Failed to save image']);
-    exit;
-  }
-  $imagePublicPath = $BASE_URL . '/' . $filename;
 }
 
-// --- LOAD EXISTING JSON ---
-if (!file_exists($EVENTS_FILE)) {
-  file_put_contents($EVENTS_FILE, '[]', LOCK_EX);
-}
-$json = file_get_contents($EVENTS_FILE);
-$events = json_decode($json, true);
-if (!is_array($events)) { $events = []; }
+// Generate event ID
+$eventId = 'evt_' . (new DateTime($startIso))->format('Y-m-d') . '_' . substr(bin2hex(random_bytes(4)), 0, 8);
 
-// --- BUILD EVENT ---
-$id = 'evt_' . substr($startIso, 0, 10) . '_' . substr(preg_replace('~[^a-z0-9]+~i', '-', strtolower($title)), 0, 32);
-
+// Create event object
 $event = [
-  'id'          => $id,
-  'title'       => $title,
-  'start'       => $startIso,
-  'end'         => $endIso,
-  'location'    => $location !== '' ? $location : null,
-  'image'       => $imagePublicPath,
-  'url'         => $url !== '' ? $url : null,
-  'description' => $description !== '' ? $description : null,
-  'tags'        => array_values($tags),
-  'createdAt'   => (new DateTime('now', $TZ))->format(DateTime::ATOM),
+    'id' => $eventId,
+    'title' => $title,
+    'start' => $startIso,
+    'end' => $endIso,
+    'location' => $location,
+    'image' => $imagePath,
+    'url' => $url ?: null,
+    'description' => $description ?: null,
+    'tags' => $tags,
+    'createdAt' => (new DateTime())->format(DateTime::ATOM)
 ];
 
-// --- APPEND & SORT (by start asc) ---
+// Load existing events
+$events = loadEvents($EVENTS_FILE);
+
+// Add new event
 $events[] = $event;
-usort($events, function ($a, $b) {
-  return strcmp($a['start'], $b['start']);
-});
 
-// --- WRITE ATOMICALLY ---
-$tmp = $EVENTS_FILE . '.tmp';
-file_put_contents($tmp, json_encode($events, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), LOCK_EX);
-rename($tmp, $EVENTS_FILE);
+// Sort by start date
+usort($events, fn($a, $b) => strcmp($a['start'], $b['start']));
 
-// --- DONE ---
-echo json_encode(['ok' => true, 'event' => $event]);
+// Save events
+if (!saveEvents($EVENTS_FILE, $events)) {
+    jsonResponse(false, 'Event konnte nicht gespeichert werden');
+}
+
+// Regenerate CSRF token for security
+$_SESSION['csrf'] = bin2hex(random_bytes(32));
+
+jsonResponse(true, 'Event erfolgreich erstellt', ['eventId' => $eventId]);

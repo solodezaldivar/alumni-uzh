@@ -1,1 +1,47 @@
-[]
+[
+    {
+        "id": "evt_2025-11-20_958d5a3f",
+        "title": "ICU Bonding",
+        "start": "2025-11-20T21:47:00+01:00",
+        "end": "2025-11-21T21:47:00+01:00",
+        "location": "Binzmühlestrasse 14",
+        "image": "/uploads/icu-bonding-e0203749.jpg",
+        "url": null,
+        "description": null,
+        "tags": [
+            "networking",
+            "AI",
+            "KI"
+        ],
+        "createdAt": "2025-11-17T20:50:23+00:00"
+    },
+    {
+        "id": "evt_2025-11-20_0bc2a6c8",
+        "title": "TEST",
+        "start": "2025-11-20T21:53:00+01:00",
+        "end": "2025-11-21T21:53:00+01:00",
+        "location": "Binzmühlestrasse 14",
+        "image": null,
+        "url": null,
+        "description": "Lorem Ipsum Test das ist ein sehr langer Text. Zum Beispiel ein Test.....",
+        "tags": [
+            "networking"
+        ],
+        "createdAt": "2025-11-17T20:54:41+00:00"
+    },
+    {
+        "id": "evt_2025-11-20_f1fab30f",
+        "title": "ICU Bonding",
+        "start": "2025-11-20T22:14:00+01:00",
+        "end": "2025-11-21T22:14:00+01:00",
+        "location": "Binz",
+        "image": "/uploads/icu-bonding-b3f6ce95.jpg",
+        "url": null,
+        "description": null,
+        "tags": [
+            "IT",
+            "KI"
+        ],
+        "createdAt": "2025-11-17T21:15:02+00:00"
+    }
+]

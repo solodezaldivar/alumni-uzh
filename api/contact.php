@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 // --- CONFIG ---
-const TO_EMAIL   = 'contact@your-domain.tld'; // where to receive messages
-const FROM_EMAIL = 'webform@your-domain.tld'; // envelope sender (use a domain you own)
+const TO_EMAIL   = 'info@alumni.ch'; // where to receive messages
+const FROM_EMAIL = 'webform@your-domain.tld'; //TODO: setzen
 const SUBJECT_PREFIX = '[UZH.AI Kontakt]';
 
 // --- CORS/Headers (optional basic) ---
