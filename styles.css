@@ -1310,3 +1310,236 @@ body.admin .muted a {
     transform: scale(1.08);
     opacity: 1;
 }
+
+/* ===========================
+   Hero small note
+=========================== */
+.hero-note {
+    margin: 14px auto 0;
+    max-width: 740px;
+    font-size: 0.95rem;
+}
+
+/* ===========================
+   Readme section
+=========================== */
+.readme-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+@media (max-width: 900px) {
+    .readme-grid {
+        grid-template-columns:1fr;
+    }
+}
+
+.readme-card h3 {
+    margin-top: 0;
+    font-size: 1.4rem;
+}
+
+.readme-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.mini-list {
+    margin: 12px 0 0;
+    padding-left: 1.1rem;
+}
+
+.mini-list li {
+    margin: .35rem 0;
+}
+
+.readme-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+/* ===========================
+   Organisation tabs (Vorstand/Revision/Ziel&Zweck)
+=========================== */
+.org-tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 18px 0 16px;
+}
+
+.org-tabs .tab {
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--fg);
+    padding: .65rem 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.org-tabs .tab:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, .06);
+}
+
+.org-tabs .tab.active {
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--brand) 0%, #5aa3ff 100%);
+    color: var(--brand-ink);
+    box-shadow: 0 10px 24px rgba(29, 78, 216, .18);
+}
+
+.org-panels {
+    display: grid;
+    gap: 14px;
+}
+
+.org-panel h3 {
+    margin-top: 0;
+}
+
+.org-panel.hidden {
+    display: none;
+}
+
+.small {
+    font-size: .9rem;
+}
+
+/* People cards with photos */
+.people-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+}
+
+@media (max-width: 800px) {
+    .people-grid {
+        grid-template-columns:1fr;
+    }
+}
+
+.person {
+    display: flex;
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(29, 78, 216, .04), transparent 55%);
+    align-items: center;
+}
+
+.person-photo {
+    width: 78px; /*86*/
+    height: 96px; /*110*/ /* taller portrait ratio */
+    border-radius: 18px;
+    object-fit: cover;
+    object-position: center top; /* preserve head; crop body first */
+    flex: 0 0 auto;
+    border: 1px solid rgba(29, 78, 216, .18);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, .08);
+    background: #f2f5fb;
+}
+
+.person-body {
+    min-width: 0;
+}
+
+.person-name {
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.person-role {
+    color: var(--muted);
+    font-weight: 700;
+    font-size: .95rem;
+    margin-top: 2px;
+}
+
+.person-meta {
+    color: var(--muted);
+    font-size: .92rem;
+    margin-top: 4px;
+}
+
+/* If you ever have long names: prevent overflow */
+.person-name, .person-role, .person-meta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ziel & Zweck layout */
+.zweck-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 18px;
+    margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+    .zweck-grid {
+        grid-template-columns:1fr;
+    }
+}
+
+.org-panel .inner {
+    box-shadow: none;
+    border-radius: 16px;
+}
+
+.doc-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+#readme .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+#readme .section-head p {
+    margin: 0;
+}
+
+/* Organisation: tabs integrated inside the card */
+.org-card {
+    padding: 18px;
+}
+
+.org-tabs.in-card {
+    justify-content: flex-start;
+    margin: 0 0 14px;
+    padding: 8px;
+    background: rgba(29, 78, 216, .06);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+}
+
+.org-tabs.in-card .tab {
+    border: 0;
+    box-shadow: none;
+}
+
+.org-tabs.in-card .tab.active {
+    box-shadow: 0 10px 24px rgba(29, 78, 216, .16);
+}
+
+.org-card .org-panel {
+    padding: 8px 6px 6px; /* spacing inside the card */
+}
+
