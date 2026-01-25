@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>UZH Alumni Informatik – Netzwerk, Events, Sponsoren</title>
     <meta name="description" content="Alumni Informatik Universität Zürich: Netzwerk, Events, Sponsoren & Kontakt."/>
+
+    <!-- Premium typography (optional but recommended) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css?v=20251117"/>
     <link rel="icon" href="uploads/logos/alumni_logo_header.png">
 </head>
@@ -22,12 +28,13 @@
 
         <nav class="nav">
             <a href="#about">Über uns</a>
-            <a href="#events">Events</a>
+            <!--            <a href="#events">Events</a>-->
             <a href="#readme">Readme</a>
             <a href="#vorstand">Vorstand</a>
             <a href="#sponsors">Sponsoren</a>
             <a href="#contact" class="btn btn-primary">Kontakt</a>
         </nav>
+
         <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false">☰</button>
     </div>
 </header>
@@ -40,8 +47,9 @@
             Netzwerk, Austausch und Karriereimpulse für Absolvent:innen der Informatik an der Universität Zürich.
         </p>
         <div class="hero-cta">
-            <a href="https://uzhalumni.ch/page/mitgliedschaft" class="btn btn-primary" target="_blank" rel="noopener">Mitglied
-                werden</a>
+            <a href="https://uzhalumni.ch/page/mitgliedschaft" class="btn btn-primary" target="_blank" rel="noopener">
+                Mitglied werden
+            </a>
 
             <a href="uploads/events/naechste_events.pdf" class="btn btn-ghost" target="_blank" rel="noopener">
                 Nächste Events
@@ -53,13 +61,14 @@
 
 <!-- About -->
 <section id="about" class="section section-alt">
-    <div class="container grid-2">
+    <div class="container grid-2 about-card">
         <div>
             <ul class="about-stats">
                 <li><strong>700+</strong> Mitglieder</li>
                 <li><strong>1997</strong> gegründet</li>
                 <li><strong>6–8</strong> Events pro Jahr</li>
             </ul>
+
             <h2>Über uns</h2>
             <p>
                 Seit 1997 verbindet der UZH Alumni Informatik (UZH.AI) Ehemalige, Studierende und das
@@ -70,6 +79,7 @@
                 Sind Sie interessiert, mit dem UZH.AI eine Partnerschaft oder eine Sponsoringzusage zu tätigen?
                 Dann senden Sie uns eine <a href="#contact">E-Mail</a>.
             </p>
+
             <ul class="checklist">
                 <li>Networking-Anlässe & Fachvorträge</li>
                 <li>Brücke zwischen Alumni, IfI und Wirtschaft</li>
@@ -84,6 +94,7 @@
 <!--    <div class="container">-->
 <!--        <div class="section-head centered">-->
 <!--            <h2>Events</h2>-->
+<!--            <p class="muted">Bevorstehende Anlässe – Filter über Suche.</p>-->
 <!--        </div>-->
 
 <!--        <div class="event-search">-->
@@ -114,43 +125,48 @@
             <p class="muted">Unser Vereinsbulletin.</p>
         </div>
 
-        <div class="readme-grid">
-            <article class="card readme-card">
+        <div class="card readme-split">
+            <div class="readme-col">
                 <h3>Aktuell</h3>
                 <ul class="mini-list">
                     <li>Hinweise zu kommenden Anlässen</li>
                     <li>Rückblicke / News</li>
                     <li>Organisatorisches</li>
                 </ul>
+
                 <div class="readme-actions">
                     <a class="btn btn-primary" href="https://alumni.ch/readme/archive/readme54_25.pdf" target="_blank"
-                       rel="noopener">PDF
-                        öffnen</a>
+                       rel="noopener">
+                        PDF öffnen
+                    </a>
                     <a class="btn btn-ghost" href="#contact">Frage stellen</a>
                 </div>
-            </article>
+            </div>
 
-            <aside class="card readme-side">
+            <div class="readme-divider" aria-hidden="true"></div>
+
+            <div class="readme-col">
                 <h3>Kontakt & Updates</h3>
-                <p class="muted">Interesse, einen Beitrag für das nächste readme zu schreiben? Gerne erwarten wir eine
-                    entsprechende Mitteilung an unsere <a href="mailto:nathan.labhart@alumni.ch">readme-Redaktion.</a>
+                <p class="muted">
+                    Interesse, einen Beitrag für das nächste readme zu schreiben? Gerne erwarten wir eine entsprechende
+                    Mitteilung
+                    an unsere <a href="mailto:nathan.labhart@alumni.ch">readme-Redaktion.</a>
                 </p>
-            </aside>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Vorstand / Revision / Ziel & Zweck -->
+<!-- Organisation -->
 <section id="vorstand" class="section">
     <div class="container">
         <div class="section-head">
             <h2>Organisation</h2>
-            <p class="muted">Vorstand · Revision · Ziel & Zweck</p>
+            <p>Der Vorstand und die Revisoren arbeiten alle ehrenamtlich.</p>
         </div>
 
         <article class="card org-card">
-
-            <div class="org-tabs" role="tablist" aria-label="Organisation Tabs">
+            <div class="org-tabs in-card" role="tablist" aria-label="Organisation Tabs">
                 <button class="tab active" role="tab" aria-selected="true" aria-controls="tab-vorstand" id="t-vorstand">
                     Vorstand
                 </button>
@@ -164,13 +180,13 @@
 
             <div class="org-panels">
                 <!-- Vorstand -->
-                <section id="tab-vorstand" class="card org-panel" role="tabpanel" aria-labelledby="t-vorstand">
+                <section id="tab-vorstand" class="org-panel" role="tabpanel" aria-labelledby="t-vorstand">
                     <h3>Vorstand</h3>
+                    <p class="muted" style="font-size: small">Legende: L= Lizentiat, B=Bachelor, M=Master, D=Diplom,
+                        P=Promotion</p>
                     <div class="people-grid">
                         <article class="person">
-                            <img class="person-photo"
-                                 src="uploads/vorstand/brigitte.jpg"
-                                 alt="Brigitte Bailer"
+                            <img class="person-photo" src="uploads/vorstand/brigitte.jpg" alt="Brigitte Bailer"
                                  loading="lazy">
                             <div class="person-body">
                                 <div class="person-name">Brigitte Bailer</div>
@@ -180,9 +196,7 @@
                         </article>
 
                         <article class="person">
-                            <img class="person-photo"
-                                 src="uploads/vorstand/sinja.jpg"
-                                 alt="Sinja Christiani"
+                            <img class="person-photo" src="uploads/vorstand/sinja.jpg" alt="Sinja Christiani"
                                  loading="lazy">
                             <div class="person-body">
                                 <div class="person-name">Sinja Christiani</div>
@@ -192,10 +206,7 @@
                         </article>
 
                         <article class="person">
-                            <img class="person-photo"
-                                 src="uploads/vorstand/alain.jpg"
-                                 alt="Alain Küng"
-                                 loading="lazy">
+                            <img class="person-photo" src="uploads/vorstand/alain.jpg" alt="Alain Küng" loading="lazy">
                             <div class="person-body">
                                 <div class="person-name">Alain Küng</div>
                                 <div class="person-role">Kommunikation, Strategie</div>
@@ -204,9 +215,7 @@
                         </article>
 
                         <article class="person">
-                            <img class="person-photo"
-                                 src="uploads/vorstand/esther.jpg"
-                                 alt="Esther Rölli"
+                            <img class="person-photo" src="uploads/vorstand/esther.jpg" alt="Esther Rölli"
                                  loading="lazy">
                             <div class="person-body">
                                 <div class="person-name">Esther Rölli</div>
@@ -216,9 +225,7 @@
                         </article>
 
                         <article class="person">
-                            <img class="person-photo"
-                                 src="uploads/vorstand/nathan.jpg"
-                                 alt="Nathan Labhart"
+                            <img class="person-photo" src="uploads/vorstand/nathan.jpg" alt="Nathan Labhart"
                                  loading="lazy">
                             <div class="person-body">
                                 <div class="person-name">Nathan Labhart</div>
@@ -228,9 +235,7 @@
                         </article>
 
                         <article class="person">
-                            <img class="person-photo"
-                                 src="uploads/vorstand/marc.jpg"
-                                 alt="Marc-Andre Pradervand"
+                            <img class="person-photo" src="uploads/vorstand/marc.jpg" alt="Marc-Andre Pradervand"
                                  loading="lazy">
                             <div class="person-body">
                                 <div class="person-name">Marc-Andre Pradervand</div>
@@ -240,9 +245,7 @@
                         </article>
 
                         <article class="person">
-                            <img class="person-photo"
-                                 src="uploads/vorstand/christian.jpg"
-                                 alt="Christian Schneider"
+                            <img class="person-photo" src="uploads/vorstand/christian.jpg" alt="Christian Schneider"
                                  loading="lazy">
                             <div class="person-body">
                                 <div class="person-name">Christian Schneider</div>
@@ -252,9 +255,7 @@
                         </article>
 
                         <article class="person">
-                            <img class="person-photo"
-                                 src="uploads/vorstand/damaris.png"
-                                 alt="Damaris Schmid"
+                            <img class="person-photo" src="uploads/vorstand/damaris.png" alt="Damaris Schmid"
                                  loading="lazy">
                             <div class="person-body">
                                 <div class="person-name">Damaris Schmid</div>
@@ -264,9 +265,7 @@
                         </article>
 
                         <article class="person">
-                            <img class="person-photo"
-                                 src="uploads/vorstand/brigitte.jpg"
-                                 alt="Ramon Solo de Zaldivar"
+                            <img class="person-photo" src="uploads/vorstand/ramon.jpeg" alt="Ramon Solo de Zaldivar"
                                  loading="lazy">
                             <div class="person-body">
                                 <div class="person-name">Ramon Solo de Zaldivar</div>
@@ -274,39 +273,45 @@
                                 <div class="person-meta">Abschlussdaten: M25</div>
                             </div>
                         </article>
-
-
                     </div>
                 </section>
 
                 <!-- Revision -->
-                <section id="tab-revision" class="card org-panel hidden" role="tabpanel" aria-labelledby="t-revision">
+                <section id="tab-revision" class="org-panel hidden" role="tabpanel" aria-labelledby="t-revision">
                     <h3>Revision</h3>
-                    <p class="muted">Bitte hier die Revisionsstelle / Revisor:innen einfügen (gemäss Alumni-Seite).</p>
-
+                    <p class="muted" style="font-size: small">Legende: L= Lizentiat, B=Bachelor, M=Master, D=Diplom,
+                        P=Promotion</p>
                     <div class="people-grid">
                         <article class="person">
-                            <div class="avatar" aria-hidden="true">R</div>
+                            <img class="person-photo" src="uploads/vorstand/caroline.jpg" alt="Caroline Grässler"
+                                 loading="lazy">
                             <div class="person-body">
-                                <div class="person-name">Name Nachname</div>
-                                <div class="person-role">Rolle (Revision)</div>
-                                <div class="person-meta">Optional</div>
+                                <div class="person-name">Caroline Grässle</div>
+                                <div class="person-role">Revisorin</div>
+                                <div class="person-meta">Abschlussdaten: L87</div>
+                            </div>
+                        </article>
+
+                        <article class="person">
+                            <img class="person-photo" src="uploads/vorstand/oliver.jpg" alt="Oliver Hoeffleur"
+                                 loading="lazy">
+                            <div class="person-body">
+                                <div class="person-name">Oliver Hoeffleur</div>
+                                <div class="person-role">Revisor</div>
+                                <div class="person-meta">Abschlussdaten: D00</div>
                             </div>
                         </article>
                     </div>
                 </section>
 
                 <!-- Ziel & Zweck -->
-                <section id="tab-zweck" class="card org-panel hidden" role="tabpanel" aria-labelledby="t-zweck">
+                <section id="tab-zweck" class="org-panel hidden" role="tabpanel" aria-labelledby="t-zweck">
                     <h3>Ziel & Zweck</h3>
-
                     <div class="zweck-grid">
                         <div>
                             <h4>Wofür wir stehen</h4>
                             <p class="muted">
-                                Bitte hier eine kurze, modern formulierte Zusammenfassung des „Ziel & Zweck“ Textes
-                                einfügen
-                                (in eigenen Worten oder gemäss euren Rechten).
+                                Ziel und Zweck des Vereins.
                             </p>
                             <ul class="checklist">
                                 <li>Vernetzung von Alumni & IfI</li>
@@ -317,7 +322,6 @@
 
                         <div class="card inner">
                             <h4>Dokumente</h4>
-                            <p class="muted">Optional: Statuten / Reglemente / Protokolle als PDFs verlinken.</p>
                             <div class="doc-links">
                                 <a class="btn btn-ghost" href="uploads/statuten.pdf" target="_blank" rel="noopener">Statuten
                                     (PDF)</a>
@@ -326,7 +330,6 @@
                             </div>
                         </div>
                     </div>
-
                 </section>
             </div>
         </article>
@@ -338,6 +341,7 @@
     <div class="container">
         <h2>Sponsoren</h2>
         <p class="muted">Danke an unsere Unterstützer:innen.</p>
+
         <div class="logo-grid">
             <a href="https://www.createq.ch/" target="_blank" rel="noopener" title="Createq – Website öffnen">
                 <img src="uploads/logos/logo_createq.png" alt="Sponsor Createq"/>
@@ -361,6 +365,7 @@
     <div class="container">
         <h2>Partner</h2>
         <p class="muted">Danke an unsere Partner.</p>
+
         <div class="logo-grid">
             <a href="https://www.goldwynpartners.ch/" target="_blank" rel="noopener"
                title="Goldwyn Partners Group AG – Website öffnen">
@@ -392,24 +397,29 @@
 
         <form id="contactForm" class="card" method="post" action="api/contact.php" novalidate>
             <div class="grid-2">
-                <label>Vorname<span class="req" aria-label="Pflichtfeld">*</span>
+                <label><span class="label-text">Vorname<span class="req"></span>*</span>
                     <input name="first" required aria-required="true">
                 </label>
-                <label>Nachname<span class="req" aria-label="Pflichtfeld">*</span>
+                <label><span class="label-text">Nachname<span class="req"></span>*</span>
                     <input name="last" required aria-required="true">
                 </label>
             </div>
-            <label>E-Mail<span class="req" aria-label="Pflichtfeld">*</span>
+
+            <label><span class="label-text">E-Mail<span class="req"></span>*</span>
                 <input type="email" name="email" required aria-required="true">
             </label>
-            <label>Betreff<span class="req" aria-label="Pflichtfeld">*</span>
+
+            <label><span class="label-text">Betreff<span class="req"></span>*</span>
                 <input name="subject" required aria-required="true">
             </label>
-            <label>Nachricht<span class="req" aria-label="Pflichtfeld">*</span>
+
+            <label><span class="label-text">Nachricht<span class="req"></span>*</span>
                 <textarea name="message" rows="6" required aria-required="true"></textarea>
             </label>
+
             <input type="hidden" name="csrf" id="csrf">
-            <input type="text" name="company" class="hp" autocomplete="off" tabindex="-1" aria-hidden="true">
+            <input type="hidden" name="company" class="hp" autocomplete="off" tabindex="-1" aria-hidden="true">
+
             <div class="form-actions">
                 <button class="btn btn-primary" type="submit">Senden</button>
                 <p id="contactStatus" class="muted" role="status" aria-live="polite"></p>
@@ -454,7 +464,7 @@
     document.getElementById('csrf').value = token;
     sessionStorage.setItem('csrf', token);
 
-    // Contact AJAX (same as yours)
+    // Contact AJAX
     const form = document.getElementById('contactForm');
     const status = document.getElementById('contactStatus');
     form.addEventListener('submit', async (e) => {
@@ -467,8 +477,8 @@
 
         status.textContent = 'Senden …';
         status.className = 'muted';
-        const data = new FormData(form);
 
+        const data = new FormData(form);
         try {
             const res = await fetch(form.action, {method: 'POST', body: data});
             if (!res.ok) throw new Error('Server error');
@@ -494,7 +504,7 @@
         }
     });
 
-    // ===== Events Carousel: upcoming only (keep your logic) =====
+    // ===== Events Carousel: upcoming only =====
     (async function renderEvents() {
         const track = document.getElementById('eventsTrack');
         const count = document.getElementById('eventsCount');
@@ -557,8 +567,13 @@
                 const img = e.image
                     ? `<img loading="lazy" src="${escapeHtml(e.image)}" alt="">`
                     : `<img loading="lazy" src="uploads/logos/uzh-placeholder.jpg" alt="Universität Zürich">`;
-                const url = e.url ? `<a class="btn btn-ghost" href="${escapeHtml(e.url)}" target="_blank" rel="noopener">Infos / Anmeldung</a>` : '';
+
+                const url = e.url
+                    ? `<a class="btn btn-ghost" href="${escapeHtml(e.url)}" target="_blank" rel="noopener">Infos / Anmeldung</a>`
+                    : '';
+
                 const tags = (e.tags ?? []).slice(0, 3).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
+
                 return `
           <article class="card event-card">
             <figure class="card-media">
