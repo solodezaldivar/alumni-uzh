@@ -232,7 +232,7 @@ if (!empty($_GET['msg'])) {
     <div class="container header-inner">
         <div class="brand-group">
             <a class="brand" href="/" aria-label="Startseite">
-                <img src="/uploads/alumni_logo_header.png" alt="Alumni Informatik" height="32">
+                <img src="/uploads/logos/alumni_logo_header.png" alt="Alumni Informatik" height="32">
             </a>
             <strong>Admin</strong>
         </div>
