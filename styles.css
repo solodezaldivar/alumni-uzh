@@ -489,7 +489,6 @@ input:focus, textarea:focus {
 #readme .readme-divider {
     position: relative;
     z-index: 1;
-    width: 1px;
     background: rgba(15, 23, 42, .08); /* neutral so it doesn't clash with the band */
 }
 
@@ -978,4 +977,149 @@ input:focus, textarea:focus {
 
 .footer-nav a:hover {
     color: var(--fg);
+}
+
+/* =========================================================
+   README ARCHIV (Swiss institutional)
+========================================================= */
+
+.page-title {
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.archive-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin: 18px 0 16px;
+    padding: 16px 18px;
+}
+
+.archive-search {
+    flex: 1;
+    min-width: 240px;
+}
+
+.archive-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.archive-card {
+    padding: 18px;
+}
+
+.archive-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.98rem;
+}
+
+.archive-table-wrap {
+    overflow: auto;
+    border-radius: 16px;
+    background: rgba(255,255,255,.92);
+}
+
+/* Keep only ONE subtle separation system */
+.archive-table thead th {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(
+            180deg,
+            rgba(248,250,252,.98),
+            rgba(255,255,255,.98)
+    );
+    text-align: left;
+    font-weight: 700;
+    color: rgba(11,16,32,.86);
+    padding: 14px 14px;
+}
+
+/* Normal row separators */
+.archive-table tbody tr:not(.year-row) td {
+    border-bottom: 1px solid rgba(15,23,42,.06);
+}
+
+/* Year group header row */
+.archive-table .year-row td {
+    padding: 10px 14px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: rgba(11,16,32,.88);
+    background: rgba(29,78,216,.06);
+}
+
+
+.archive-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(15,23,42,.08);
+    vertical-align: middle;
+}
+
+/* Calm first column */
+.archive-table .year-col {
+    color: rgba(91,98,115,.92);
+    font-weight: 700;
+    width: 90px;
+}
+
+/* PDF link with icon */
+.pdf-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(29,78,216,.18);
+    background: rgba(29,78,216,.06);
+    color: var(--brand);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+}
+
+.pdf-link::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-6Z' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M14 2v6h6' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8 15h8M8 18h6' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Note under table */
+.archive-hint {
+    margin: 14px 2px 0;
+    font-size: 0.92rem;
+}
+
+/* About action button alignment */
+.about-actions {
+    margin-top: 14px;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .archive-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .archive-actions {
+        justify-content: flex-start;
+    }
+
+    .archive-table .year-col {
+        width: 70px;
+    }
 }
