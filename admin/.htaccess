@@ -2,3 +2,8 @@ AuthType Basic
 AuthName "Restricted Area"
 AuthUserFile /home_pr7/a/l/alumni.ch/pwd/.htpasswd
 Require valid-user
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+Options -Indexes
