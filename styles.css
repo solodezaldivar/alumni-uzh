@@ -247,25 +247,49 @@ p {
 ========================================================= */
 .hero {
     position: relative;
-    overflow: hidden;
+    overflow: hidden
 }
 
 .hero-inner {
     padding: 96px 0 72px;
-    text-align: center;
+    text-align: center
 }
 
 .hero h1 {
     font-size: clamp(34px, 5vw, 56px);
     margin: 0 0 10px;
-    letter-spacing: -.02em;
+    letter-spacing: -.02em
 }
 
 .lead {
     color: var(--muted);
     font-size: clamp(18px, 2.5vw, 22px);
     max-width: 820px;
-    margin: 0 auto 26px;
+    margin: 0 auto 26px
+}
+
+.hero-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap
+}
+
+.hero-cta .btn {
+    min-width: 220px
+}
+
+/* Make ghost look like “Swiss pill” */
+.hero-cta .btn-ghost {
+    background: rgba(29, 78, 216, .06);
+    border: 1px solid rgba(29, 78, 216, .18);
+    color: var(--brand);
+    box-shadow: 0 10px 22px rgba(11, 16, 32, .06), inset 0 1px 0 rgba(255, 255, 255, .7)
+}
+
+.hero-cta .btn-ghost:hover {
+    background: rgba(29, 78, 216, .10);
+    border-color: rgba(29, 78, 216, .30)
 }
 
 .hero-bg {
@@ -276,25 +300,6 @@ p {
     linear-gradient(180deg, rgba(29, 78, 216, .08), transparent 40%);
 }
 
-/* Hero CTA: stacked, Events first */
-.hero-cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
-
-.hero-cta .btn {
-    min-width: 220px;
-}
-
-.hero-cta .btn-ghost {
-    order: 1;
-}
-
-.hero-cta .btn-primary {
-    order: 2;
-}
 
 /* =========================================================
    BUTTONS & INPUTS
@@ -563,7 +568,7 @@ input:focus, textarea:focus {
     font-weight: 600;
     letter-spacing: -0.01em;
 
-    color: rgba(11,16,32,.65);
+    color: rgba(11, 16, 32, .65);
     text-decoration: none;
 
     display: inline-flex;
@@ -615,13 +620,14 @@ input:focus, textarea:focus {
     padding: 0.62rem 1rem;
     font-size: 0.95rem;
     font-weight: 650;
-    box-shadow: 0 8px 18px rgba(29,78,216,.16);
+    box-shadow: 0 8px 18px rgba(29, 78, 216, .16);
 }
 
 /* Optional: add icon via CSS if you don't want HTML changes */
 #readme .btn-primary::before {
     content: "";
-    width: 16px; height: 16px;
+    width: 16px;
+    height: 16px;
     margin-right: 8px;
     background-repeat: no-repeat;
     background-position: center;
@@ -637,18 +643,23 @@ input:focus, textarea:focus {
     transform: translateY(-1px);
 }
 
-#readme .card.readme-split { position: relative; overflow: hidden; }
+#readme .card.readme-split {
+    position: relative;
+    overflow: hidden;
+}
 
 /* band stays */
 #readme .card.readme-split::before {
     content: "";
     position: absolute;
-    top: 0; left: 0; right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 6px;
     background: linear-gradient(90deg,
-    rgba(29,78,216,.65),
-    rgba(29,78,216,.20),
-    rgba(29,78,216,.06)
+    rgba(29, 78, 216, .65),
+    rgba(29, 78, 216, .20),
+    rgba(29, 78, 216, .06)
     );
 }
 
@@ -658,25 +669,27 @@ input:focus, textarea:focus {
     background: transparent;
     position: relative;
 }
+
 #readme .readme-divider::before {
     content: "";
     position: absolute;
-    top: 12px;           /* <-- avoids band clash */
+    top: 12px; /* <-- avoids band clash */
     bottom: 12px;
     left: 0;
     width: 1px;
     background: linear-gradient(
             180deg,
-            rgba(15,23,42,.04),
-            rgba(15,23,42,.10),
-            rgba(15,23,42,.04)
+            rgba(15, 23, 42, .04),
+            rgba(15, 23, 42, .10),
+            rgba(15, 23, 42, .04)
     );
 }
 
 /* Calm tonal separation */
 #readme .readme-col:first-child {
-    background: linear-gradient(180deg, rgba(29,78,216,.03), rgba(255,255,255,0));
+    background: linear-gradient(180deg, rgba(29, 78, 216, .03), rgba(255, 255, 255, 0));
 }
+
 #readme .readme-col:last-child {
     background: transparent;
 }
@@ -702,7 +715,7 @@ input:focus, textarea:focus {
     width: 5px;
     height: 5px;
     border-radius: 999px;
-    background: rgba(15,23,42,.22);
+    background: rgba(15, 23, 42, .22);
 }
 
 /* =========================================================
@@ -1093,245 +1106,422 @@ input:focus, textarea:focus {
 }
 
 /* =========================================================
-   FOOTER
+   Footer + socials
 ========================================================= */
 .footer {
     border-top: 1px solid var(--line);
     padding: 28px 0;
-    font-size: .95rem;
+    font-size: .95rem
 }
 
 .footer-inner {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 18px;
+    flex-wrap: wrap
+}
+
+.footer-nav {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap
 }
 
 .footer-nav a {
-    color: var(--muted);
+    color: rgba(91, 98, 115, .92);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 650
 }
 
 .footer-nav a:hover {
-    color: var(--fg);
+    color: var(--fg)
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap
+}
+
+.social-links {
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+
+.social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 23, 42, .10);
+    background: rgba(255, 255, 255, .8);
+    box-shadow: 0 10px 22px rgba(11, 16, 32, .05);
+    color: rgba(11, 16, 32, .80);
+}
+
+.social:hover {
+    color: var(--brand);
+    border-color: rgba(29, 78, 216, .22);
+    background: rgba(29, 78, 216, .06);
+    text-decoration: none
+}
+
+.social-ic {
+    width: 18px;
+    height: 18px;
+    display: inline-flex
+}
+
+.social-ic svg {
+    width: 18px;
+    height: 18px
 }
 
 /* =========================================================
-   README ARCHIVE — Swiss institutional table (no double lines)
+   Readme archive page
+========================================================= */
+.archive-head h1 {
+    font-size: clamp(32px, 4vw, 48px);
+    margin: 0
+}
+
+.back-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 650;
+    color: rgba(91, 98, 115, .92);
+}
+
+.back-inline::before {
+    content: "←";
+    font-size: 1.05em
+}
+
+.back-inline:hover {
+    color: var(--fg);
+    text-decoration: none
+}
+
+/* =========================================================
+   Admin page helper classes (also used inline)
+========================================================= */
+.notice {
+    border-radius: 14px
+}
+
+
+/* =========================================================
+   ADMIN — aligned with main design system
 ========================================================= */
 
-.archive-toolbar {
+body.admin {
+    background: var(--bg);
+}
+
+/* Main spacing */
+.admin-main {
+    padding: 48px 0 72px;
+}
+
+.admin-wrap {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+/* Header area */
+.admin-head {
     display: flex;
-    gap: 12px;
-    align-items: center;
-    margin: 14px 0 18px;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
     flex-wrap: wrap;
+    margin-bottom: 22px;
 }
 
-.archive-search {
-    flex: 1;
-    min-width: 240px;
-    position: relative;
+.admin-title h2 {
+    margin: 0 0 6px;
 }
 
-.archive-search input {
-    width: 100%;
-    padding: 12px 14px 12px 40px;
-    border-radius: 14px;
-    border: 1px solid rgba(15, 23, 42, .10);
-    background: rgba(255, 255, 255, .92);
-    box-shadow: 0 1px 0 rgba(15, 23, 42, .03) inset;
+.admin-title p {
+    margin: 0;
 }
 
-.archive-search::before {
-    content: "";
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    opacity: .65;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 16px 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z' stroke='%235b6273' stroke-width='2'/%3E%3Cpath d='M16.5 16.5 21 21' stroke='%235b6273' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+/* Badge (same language as about-stats pills) */
+.admin-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
-/* Wrapper: NO borders, just one card surface */
-.archive-card {
-    padding: 22px;
-    border-radius: 22px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(248, 250, 252, .96));
-    box-shadow: var(--shadow-md);
-    border: 1px solid rgba(15, 23, 42, .08);
-}
-
-/* Table container: no extra borders = no double line */
-.archive-table-wrap {
-    overflow: auto;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, .92);
-}
-
-/* Table base */
-.archive-table {
-    width: 100%;
-    border-collapse: separate; /* important for “spacing instead of lines” */
-    border-spacing: 0 10px; /* vertical rhythm */
-    min-width: 720px;
-}
-
-/* Header: clean, no bottom border */
-.archive-table thead th {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    text-align: left;
-    padding: 12px 14px;
-    font-weight: 750;
-    letter-spacing: -0.01em;
-    color: rgba(11, 16, 32, .78);
-    background: linear-gradient(180deg, rgba(250, 251, 252, .98), rgba(255, 255, 255, .98));
-}
-
-/* Body cells: “pill row” look, no borders */
-.archive-table tbody tr {
-    background: rgba(255, 255, 255, .96);
-    box-shadow: 0 10px 24px rgba(11, 16, 32, .06);
-}
-
-.archive-table tbody td {
-    padding: 14px 14px;
-    vertical-align: middle;
-    color: rgba(11, 16, 32, .92);
-}
-
-/* Rounded row corners */
-.archive-table tbody tr td:first-child {
-    border-top-left-radius: 14px;
-    border-bottom-left-radius: 14px;
-}
-
-.archive-table tbody tr td:last-child {
-    border-top-right-radius: 14px;
-    border-bottom-right-radius: 14px;
-}
-
-/* Year grouping row: darker, flatter, more “institutional” */
-.archive-table .year-row {
-    background: transparent;
-    box-shadow: none;
-}
-
-.archive-table .year-row td {
-    padding: 10px 14px;
-    border-radius: 12px;
-    background: rgba(29, 78, 216, .08); /* slightly darker than before */
-    color: rgba(11, 16, 32, .85);
-    font-weight: 800;
-    letter-spacing: -0.01em;
-}
-
-/* “Year row” should not get rounded multi-cell styling */
-.archive-table .year-row td:first-child,
-.archive-table .year-row td:last-child {
-    border-radius: 12px;
-}
-
-/* PDF button — Swiss minimal */
-.archive-pdf {
+.admin-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 10px 14px;
     border-radius: 999px;
+
+    background: rgba(29, 78, 216, .06);
+    border: 1px solid rgba(29, 78, 216, .14);
+
+    box-shadow: 0 8px 18px rgba(11, 16, 32, .05);
+
+    font-weight: 650;
+    letter-spacing: -0.01em;
+}
+
+.admin-badge small {
+    color: rgba(91, 98, 115, .92);
+    font-weight: 600;
+}
+
+/* Card refinement */
+.admin-card {
+    border-radius: 22px;
+    padding: 26px;
+}
+
+/* Form */
+.admin-form {
+    display: grid;
+    gap: 14px;
+}
+
+.admin-form label {
+    display: grid;
+    gap: 8px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.admin-help {
+    margin: 0;
+    color: rgba(91, 98, 115, .92);
+    font-size: .95rem;
+}
+
+/* Buttons alignment */
+.admin-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 6px;
+}
+
+/* Notices */
+.admin-notice {
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, .92);
+    padding: 12px 14px;
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-notice.ok {
+    border-color: rgba(5, 150, 105, .35);
+    background: rgba(5, 150, 105, .06);
+}
+
+.admin-notice.err {
+    border-color: rgba(220, 38, 38, .35);
+    background: rgba(220, 38, 38, .06);
+}
+
+/* Status block */
+.admin-status-grid {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+/* Inline code */
+.k {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: .92rem;
+    background: rgba(15, 23, 42, .05);
+    padding: .15rem .4rem;
+    border-radius: 10px;
+}
+
+/* Responsive refinement */
+@media (max-width: 860px) {
+    .admin-main {
+        padding: 32px 0 60px;
+    }
+
+    .admin-card {
+        padding: 20px;
+    }
+}
+
+/* =========================================================
+   ARCHIVE — FIX VISIBILITY (overrides any old table layout)
+   Paste at VERY END of styles.css
+========================================================= */
+
+/* Make sure the archive card doesn't clip its contents */
+.archive-card,
+.archive-card.card {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/* If old table wrappers exist in CSS, prevent them from messing with layout */
+.archive-table-wrap,
+.archive-table {
+    display: none !important;
+}
+
+/* Ensure our list container is visible */
+#archiveList,
+.archive-list {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/* Toolbar – keep it clean and not full-height */
+.archive-toolbar {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+}
+
+/* Search input polish */
+.archive-search input {
+    width: min(360px, 100%);
+    padding: .78rem .95rem;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 23, 42, .10);
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, .03) inset;
+}
+
+/* Year blocks */
+.archive-year {
+    display: block;
+}
+
+.archive-year-title {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    color: rgba(11, 16, 32, .88);
+}
+
+/* List container per year */
+.archive-year-items {
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(248, 250, 252, .96));
+    box-shadow: var(--shadow-sm);
+}
+
+/* Item rows */
+.archive-item-row {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 12px 14px;
+    border-top: 1px solid rgba(15, 23, 42, .07);
+}
+
+.archive-item-row:first-child {
+    border-top: 0;
+}
+
+/* Cover thumbnail */
+.cover-thumb {
+    width: 56px;
+    height: 72px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: block;
+    background: #fff;
+    border: 1px solid rgba(15, 23, 42, .08);
+    box-shadow: 0 10px 22px rgba(11, 16, 32, .06);
+}
+
+.cover-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Meta */
+.issue-title {
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
+.issue-sub {
+    font-size: .92rem;
+    margin-top: 2px;
+}
+
+/* PDF action */
+.archive-item-actions {
+    display: flex;
+    align-items: center;
+}
+
+.pdf-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: .55rem .75rem;
+    border-radius: 999px;
     border: 1px solid rgba(29, 78, 216, .18);
     background: rgba(29, 78, 216, .06);
     color: var(--brand);
-    font-weight: 750;
-    letter-spacing: -0.01em;
+    font-weight: 700;
     text-decoration: none;
 }
 
-.archive-pdf::before {
-    content: "";
-    width: 16px;
-    height: 16px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 16px 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-6Z' stroke='%231d4ed8' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M14 2v6h6' stroke='%231d4ed8' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E");
-}
-
-/* Hover is subtle (institutional) */
-.archive-pdf:hover {
+.pdf-link:hover {
     background: rgba(29, 78, 216, .10);
     border-color: rgba(29, 78, 216, .28);
     text-decoration: none;
 }
 
-/* Mobile: reduce spacing + allow compact rows */
-@media (max-width: 820px) {
-    .archive-table {
-        border-spacing: 0 8px;
-        min-width: 620px;
-    }
-
-    .archive-table thead th,
-    .archive-table tbody td {
-        padding: 12px 12px;
-    }
-}
-
-/* =========================================================
-   ARCHIVE — Inline Back + Title
-========================================================= */
-
-.archive-head {
-    display: flex;
-    align-items: baseline;
-    gap: 18px;
-    margin-bottom: 6px;
-}
-
-/* Back link */
-.back-inline {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    font-size: 0.95rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-
-    color: rgba(11, 16, 32, .65);
-    text-decoration: none;
-
-    transition: color .18s ease;
-}
-
-/* Arrow */
-.back-inline::before {
-    content: "";
+.pdf-ic,
+.pdf-ic svg {
     width: 16px;
     height: 16px;
-    background-size: 16px;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M15 6 9 12l6 6' stroke='%230b1020' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-
-    opacity: .7;
+    display: inline-block;
 }
 
-/* Hover: subtle */
-.back-inline:hover {
-    color: var(--brand);
-}
+/* Mobile layout */
+@media (max-width: 560px) {
+    .archive-item-row {
+        grid-template-columns: 52px 1fr;
+    }
 
-.archive-sub {
-    margin-bottom: 28px;
+    .archive-item-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        padding-left: 66px;
+        margin-top: 6px;
+    }
 }
