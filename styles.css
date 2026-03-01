@@ -550,6 +550,50 @@ input:focus, textarea:focus {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='m4 8 8 6 8-6' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
+.readme-head-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+/* Archive link in header */
+.readme-archive-link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+
+    color: rgba(11,16,32,.65);
+    text-decoration: none;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    transition: color .18s ease;
+}
+
+/* Arrow */
+.readme-archive-link::after {
+    content: "→";
+    font-size: 0.95rem;
+    opacity: .6;
+}
+
+/* Hover: subtle, not flashy */
+.readme-archive-link:hover {
+    color: var(--brand);
+}
+
+/* Responsive: stack nicely on small screens */
+@media (max-width: 600px) {
+    .readme-head-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}
+
 /* responsive stack */
 @media (max-width: 900px) {
     #readme .card.readme-split {
@@ -564,6 +608,101 @@ input:focus, textarea:focus {
     #readme .readme-divider::before {
         display: none;
     }
+}
+
+/* PDF öffnen: compact, document-like */
+#readme .btn-primary {
+    padding: 0.62rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 650;
+    box-shadow: 0 8px 18px rgba(29,78,216,.16);
+}
+
+/* Optional: add icon via CSS if you don't want HTML changes */
+#readme .btn-primary::before {
+    content: "";
+    width: 16px; height: 16px;
+    margin-right: 8px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
+    display: inline-block;
+    transform: translateY(1px);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none'%3E%3Cpath d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-6Z' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M14 2v6h6' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Subtle hover */
+#readme .btn-primary:hover {
+    box-shadow: 0 12px 22px rgba(29, 78, 216, .22);
+    transform: translateY(-1px);
+}
+
+#readme .card.readme-split { position: relative; overflow: hidden; }
+
+/* band stays */
+#readme .card.readme-split::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg,
+    rgba(29,78,216,.65),
+    rgba(29,78,216,.20),
+    rgba(29,78,216,.06)
+    );
+}
+
+/* divider: subtle gradient + starts below band */
+#readme .readme-divider {
+    width: 1px;
+    background: transparent;
+    position: relative;
+}
+#readme .readme-divider::before {
+    content: "";
+    position: absolute;
+    top: 12px;           /* <-- avoids band clash */
+    bottom: 12px;
+    left: 0;
+    width: 1px;
+    background: linear-gradient(
+            180deg,
+            rgba(15,23,42,.04),
+            rgba(15,23,42,.10),
+            rgba(15,23,42,.04)
+    );
+}
+
+/* Calm tonal separation */
+#readme .readme-col:first-child {
+    background: linear-gradient(180deg, rgba(29,78,216,.03), rgba(255,255,255,0));
+}
+#readme .readme-col:last-child {
+    background: transparent;
+}
+
+#readme .mini-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+    display: grid;
+    gap: 8px;
+}
+
+#readme .mini-list li {
+    position: relative;
+    padding-left: 16px;
+}
+
+#readme .mini-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .65em;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(15,23,42,.22);
 }
 
 /* =========================================================
@@ -980,146 +1119,219 @@ input:focus, textarea:focus {
 }
 
 /* =========================================================
-   README ARCHIV (Swiss institutional)
+   README ARCHIVE — Swiss institutional table (no double lines)
 ========================================================= */
-
-.page-title {
-    font-size: clamp(26px, 3vw, 38px);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin: 0;
-}
 
 .archive-toolbar {
     display: flex;
+    gap: 12px;
     align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    margin: 18px 0 16px;
-    padding: 16px 18px;
+    margin: 14px 0 18px;
+    flex-wrap: wrap;
 }
 
 .archive-search {
     flex: 1;
     min-width: 240px;
+    position: relative;
 }
 
-.archive-actions {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.archive-card {
-    padding: 18px;
-}
-
-.archive-table {
+.archive-search input {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    font-size: 0.98rem;
+    padding: 12px 14px 12px 40px;
+    border-radius: 14px;
+    border: 1px solid rgba(15, 23, 42, .10);
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 1px 0 rgba(15, 23, 42, .03) inset;
 }
 
+.archive-search::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    opacity: .65;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z' stroke='%235b6273' stroke-width='2'/%3E%3Cpath d='M16.5 16.5 21 21' stroke='%235b6273' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Wrapper: NO borders, just one card surface */
+.archive-card {
+    padding: 22px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(248, 250, 252, .96));
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(15, 23, 42, .08);
+}
+
+/* Table container: no extra borders = no double line */
 .archive-table-wrap {
     overflow: auto;
     border-radius: 16px;
-    background: rgba(255,255,255,.92);
+    background: rgba(255, 255, 255, .92);
 }
 
-/* Keep only ONE subtle separation system */
+/* Table base */
+.archive-table {
+    width: 100%;
+    border-collapse: separate; /* important for “spacing instead of lines” */
+    border-spacing: 0 10px; /* vertical rhythm */
+    min-width: 720px;
+}
+
+/* Header: clean, no bottom border */
 .archive-table thead th {
     position: sticky;
     top: 0;
-    background: linear-gradient(
-            180deg,
-            rgba(248,250,252,.98),
-            rgba(255,255,255,.98)
-    );
+    z-index: 2;
     text-align: left;
-    font-weight: 700;
-    color: rgba(11,16,32,.86);
+    padding: 12px 14px;
+    font-weight: 750;
+    letter-spacing: -0.01em;
+    color: rgba(11, 16, 32, .78);
+    background: linear-gradient(180deg, rgba(250, 251, 252, .98), rgba(255, 255, 255, .98));
+}
+
+/* Body cells: “pill row” look, no borders */
+.archive-table tbody tr {
+    background: rgba(255, 255, 255, .96);
+    box-shadow: 0 10px 24px rgba(11, 16, 32, .06);
+}
+
+.archive-table tbody td {
     padding: 14px 14px;
+    vertical-align: middle;
+    color: rgba(11, 16, 32, .92);
 }
 
-/* Normal row separators */
-.archive-table tbody tr:not(.year-row) td {
-    border-bottom: 1px solid rgba(15,23,42,.06);
+/* Rounded row corners */
+.archive-table tbody tr td:first-child {
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
 }
 
-/* Year group header row */
+.archive-table tbody tr td:last-child {
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+}
+
+/* Year grouping row: darker, flatter, more “institutional” */
+.archive-table .year-row {
+    background: transparent;
+    box-shadow: none;
+}
+
 .archive-table .year-row td {
     padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(29, 78, 216, .08); /* slightly darker than before */
+    color: rgba(11, 16, 32, .85);
     font-weight: 800;
     letter-spacing: -0.01em;
-    color: rgba(11,16,32,.88);
-    background: rgba(29,78,216,.06);
 }
 
-
-.archive-table td {
-    padding: 12px 14px;
-    border-bottom: 1px solid rgba(15,23,42,.08);
-    vertical-align: middle;
+/* “Year row” should not get rounded multi-cell styling */
+.archive-table .year-row td:first-child,
+.archive-table .year-row td:last-child {
+    border-radius: 12px;
 }
 
-/* Calm first column */
-.archive-table .year-col {
-    color: rgba(91,98,115,.92);
-    font-weight: 700;
-    width: 90px;
-}
-
-/* PDF link with icon */
-.pdf-link {
-    position: relative;
+/* PDF button — Swiss minimal */
+.archive-pdf {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 12px;
+    padding: 10px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(29,78,216,.18);
-    background: rgba(29,78,216,.06);
+    border: 1px solid rgba(29, 78, 216, .18);
+    background: rgba(29, 78, 216, .06);
     color: var(--brand);
-    font-weight: 700;
+    font-weight: 750;
     letter-spacing: -0.01em;
     text-decoration: none;
 }
 
-.pdf-link::before {
+.archive-pdf::before {
     content: "";
     width: 16px;
     height: 16px;
-    display: inline-block;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 16px 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-6Z' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M14 2v6h6' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8 15h8M8 18h6' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-6Z' stroke='%231d4ed8' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M14 2v6h6' stroke='%231d4ed8' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
-/* Note under table */
-.archive-hint {
-    margin: 14px 2px 0;
-    font-size: 0.92rem;
+/* Hover is subtle (institutional) */
+.archive-pdf:hover {
+    background: rgba(29, 78, 216, .10);
+    border-color: rgba(29, 78, 216, .28);
+    text-decoration: none;
 }
 
-/* About action button alignment */
-.about-actions {
-    margin-top: 14px;
+/* Mobile: reduce spacing + allow compact rows */
+@media (max-width: 820px) {
+    .archive-table {
+        border-spacing: 0 8px;
+        min-width: 620px;
+    }
+
+    .archive-table thead th,
+    .archive-table tbody td {
+        padding: 12px 12px;
+    }
 }
 
-/* Responsive */
-@media (max-width: 860px) {
-    .archive-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-    }
+/* =========================================================
+   ARCHIVE — Inline Back + Title
+========================================================= */
 
-    .archive-actions {
-        justify-content: flex-start;
-    }
+.archive-head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 6px;
+}
 
-    .archive-table .year-col {
-        width: 70px;
-    }
+/* Back link */
+.back-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+
+    color: rgba(11, 16, 32, .65);
+    text-decoration: none;
+
+    transition: color .18s ease;
+}
+
+/* Arrow */
+.back-inline::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M15 6 9 12l6 6' stroke='%230b1020' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+    opacity: .7;
+}
+
+/* Hover: subtle */
+.back-inline:hover {
+    color: var(--brand);
+}
+
+.archive-sub {
+    margin-bottom: 28px;
 }
