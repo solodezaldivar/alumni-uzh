@@ -11,7 +11,7 @@
     --line: rgba(15, 23, 42, .10);
 
     --card: #fff;
-    --brand: #1d4ed8;
+    --brand: #556995;
     --brand-ink: #fff;
 
     --shadow-sm: 0 6px 16px rgba(11, 16, 32, .06);
@@ -129,7 +129,7 @@ p {
 
 /* Accessibility */
 :focus-visible {
-    outline: 3px solid rgba(29, 78, 216, .6);
+    outline: 3px solid rgba(85, 105, 149, .6);
     outline-offset: 2px;
     border-radius: 8px;
 }
@@ -211,7 +211,7 @@ p {
 
 .nav .btn-primary {
     padding: .8rem 1.1rem;
-    box-shadow: 0 12px 26px rgba(29, 78, 216, .20);
+    box-shadow: 0 12px 26px rgba(85, 105, 149, .20);
 }
 
 .nav-toggle {
@@ -281,23 +281,23 @@ p {
 
 /* Make ghost look like “Swiss pill” */
 .hero-cta .btn-ghost {
-    background: rgba(29, 78, 216, .06);
-    border: 1px solid rgba(29, 78, 216, .18);
+    background: rgba(85, 105, 149, .06);
+    border: 1px solid rgba(85, 105, 149, .18);
     color: var(--brand);
     box-shadow: 0 10px 22px rgba(11, 16, 32, .06), inset 0 1px 0 rgba(255, 255, 255, .7)
 }
 
 .hero-cta .btn-ghost:hover {
-    background: rgba(29, 78, 216, .10);
-    border-color: rgba(29, 78, 216, .30)
+    background: rgba(85, 105, 149, .10);
+    border-color: rgba(85, 105, 149, .30)
 }
 
 .hero-bg {
     position: absolute;
     inset: -20% -20% auto -20%;
     height: 60%;
-    background: radial-gradient(900px 450px at 50% 18%, rgba(29, 78, 216, .12), transparent 60%),
-    linear-gradient(180deg, rgba(29, 78, 216, .08), transparent 40%);
+    background: radial-gradient(900px 450px at 50% 18%, rgba(85, 105, 149, .12), transparent 60%),
+    linear-gradient(180deg, rgba(85, 105, 149, .08), transparent 40%);
 }
 
 
@@ -332,11 +332,11 @@ p {
     background: var(--brand);
     color: var(--brand-ink);
     border-color: transparent;
-    box-shadow: 0 12px 26px rgba(29, 78, 216, .22);
+    box-shadow: 0 12px 26px rgba(85, 105, 149, .22);
 }
 
 .btn-primary:hover {
-    box-shadow: 0 18px 36px rgba(29, 78, 216, .28);
+    box-shadow: 0 18px 36px rgba(85, 105, 149, .28);
 }
 
 .btn-ghost {
@@ -346,15 +346,15 @@ p {
 
 /* Make Hero "Nächste Events" match About pills */
 .hero-cta .btn-ghost {
-    background: rgba(29, 78, 216, .06);
-    border: 1px solid rgba(29, 78, 216, .18);
+    background: rgba(85, 105, 149, .06);
+    border: 1px solid rgba(85, 105, 149, .18);
     color: var(--brand);
     box-shadow: 0 10px 22px rgba(11, 16, 32, .06), inset 0 1px 0 rgba(255, 255, 255, .6);
 }
 
 .hero-cta .btn-ghost:hover {
-    background: rgba(29, 78, 216, .10);
-    border-color: rgba(29, 78, 216, .30);
+    background: rgba(85, 105, 149, .10);
+    border-color: rgba(85, 105, 149, .30);
 }
 
 input, textarea {
@@ -371,7 +371,7 @@ input, textarea {
 input:focus, textarea:focus {
     outline: none;
     border-color: var(--brand);
-    box-shadow: 0 0 0 3px rgba(29, 78, 216, .12);
+    box-shadow: 0 0 0 3px rgba(85, 105, 149, .12);
     background: #fff;
 }
 
@@ -418,8 +418,8 @@ input:focus, textarea:focus {
     gap: 8px;
     padding: 10px 14px;
     border-radius: 999px;
-    background: rgba(29, 78, 216, .06);
-    border: 1px solid rgba(29, 78, 216, .14);
+    background: rgba(85, 105, 149, .06);
+    border: 1px solid rgba(85, 105, 149, .14);
     box-shadow: 0 10px 22px rgba(11, 16, 32, .06);
     color: rgba(11, 16, 32, .86);
     font-size: .95rem;
@@ -484,7 +484,7 @@ input:focus, textarea:focus {
     right: 0;
     height: 6px;
     z-index: 3;
-    background: linear-gradient(90deg, rgba(29, 78, 216, .65), rgba(29, 78, 216, .25), rgba(29, 78, 216, .05));
+    background: linear-gradient(90deg, rgba(85, 105, 149, .65), rgba(85, 105, 149, .25), rgba(85, 105, 149, .05));
 }
 
 #readme .readme-col {
@@ -506,7 +506,7 @@ input:focus, textarea:focus {
     width: 3px;
     height: 52px;
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(29, 78, 216, .45), rgba(29, 78, 216, .14), rgba(29, 78, 216, 0));
+    background: linear-gradient(180deg, rgba(85, 105, 149, .45), rgba(85, 105, 149, .14), rgba(85, 105, 149, 0));
 }
 
 #readme .mini-list {
@@ -540,7 +540,7 @@ input:focus, textarea:focus {
     width: 20px;
     height: 20px;
     border-radius: 6px;
-    background: rgba(29, 78, 216, .10);
+    background: rgba(85, 105, 149, .10);
     box-shadow: 0 6px 14px rgba(11, 16, 32, .06);
     background-repeat: no-repeat;
     background-position: center;
@@ -548,11 +548,11 @@ input:focus, textarea:focus {
 }
 
 #readme .readme-col:first-child h3::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 6h11a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8a3 3 0 0 1-3-3V8a2 2 0 0 1 2-2Z' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 18a2 2 0 0 0 2 2' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M9 10h7M9 13h7M9 16h5' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 6h11a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8a3 3 0 0 1-3-3V8a2 2 0 0 1 2-2Z' stroke='%23556995' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 18a2 2 0 0 0 2 2' stroke='%23556995' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M9 10h7M9 13h7M9 16h5' stroke='%23556995' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
 #readme .readme-col:last-child h3::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='m4 8 8 6 8-6' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z' stroke='%23556995' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='m4 8 8 6 8-6' stroke='%23556995' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 .readme-head-top {
@@ -620,7 +620,7 @@ input:focus, textarea:focus {
     padding: 0.62rem 1rem;
     font-size: 0.95rem;
     font-weight: 650;
-    box-shadow: 0 8px 18px rgba(29, 78, 216, .16);
+    box-shadow: 0 8px 18px rgba(85, 105, 149, .16);
 }
 
 /* Optional: add icon via CSS if you don't want HTML changes */
@@ -639,7 +639,7 @@ input:focus, textarea:focus {
 
 /* Subtle hover */
 #readme .btn-primary:hover {
-    box-shadow: 0 12px 22px rgba(29, 78, 216, .22);
+    box-shadow: 0 12px 22px rgba(85, 105, 149, .22);
     transform: translateY(-1px);
 }
 
@@ -657,9 +657,9 @@ input:focus, textarea:focus {
     right: 0;
     height: 6px;
     background: linear-gradient(90deg,
-    rgba(29, 78, 216, .65),
-    rgba(29, 78, 216, .20),
-    rgba(29, 78, 216, .06)
+    rgba(85, 105, 149, .65),
+    rgba(85, 105, 149, .20),
+    rgba(85, 105, 149, .06)
     );
 }
 
@@ -687,7 +687,7 @@ input:focus, textarea:focus {
 
 /* Calm tonal separation */
 #readme .readme-col:first-child {
-    background: linear-gradient(180deg, rgba(29, 78, 216, .03), rgba(255, 255, 255, 0));
+    background: linear-gradient(180deg, rgba(85, 105, 149, .03), rgba(255, 255, 255, 0));
 }
 
 #readme .readme-col:last-child {
@@ -750,14 +750,14 @@ input:focus, textarea:focus {
 }
 
 .org-tabs .tab:hover {
-    background: rgba(29, 78, 216, .06);
+    background: rgba(85, 105, 149, .06);
     color: rgba(11, 16, 32, .92);
 }
 
 .org-tabs .tab.active {
     background: var(--brand);
     color: var(--brand-ink);
-    box-shadow: 0 12px 24px rgba(29, 78, 216, .22);
+    box-shadow: 0 12px 24px rgba(85, 105, 149, .22);
 }
 
 .org-panel {
@@ -869,8 +869,8 @@ input:focus, textarea:focus {
     padding: 12px 14px;
     border-radius: 14px;
 
-    background: rgba(29, 78, 216, .05);
-    border: 1px solid rgba(29, 78, 216, .14);
+    background: rgba(85, 105, 149, .05);
+    border: 1px solid rgba(85, 105, 149, .14);
     color: rgba(11, 16, 32, .92);
 
     box-shadow: 0 8px 18px rgba(11, 16, 32, .06);
@@ -881,11 +881,11 @@ input:focus, textarea:focus {
     width: 18px;
     height: 18px;
     border-radius: 6px;
-    background: rgba(29, 78, 216, .12);
+    background: rgba(85, 105, 149, .12);
     box-shadow: 0 6px 14px rgba(11, 16, 32, .06);
     flex: 0 0 auto;
 
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-6Z' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M14 2v6h6' stroke='%231d4ed8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-6Z' stroke='%23556995' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M14 2v6h6' stroke='%23556995' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 14px 14px;
@@ -899,15 +899,15 @@ input:focus, textarea:focus {
     font-weight: 800;
     letter-spacing: .06em;
     color: var(--brand);
-    background: rgba(29, 78, 216, .10);
-    border: 1px solid rgba(29, 78, 216, .16);
+    background: rgba(85, 105, 149, .10);
+    border: 1px solid rgba(85, 105, 149, .16);
     padding: 4px 8px;
     border-radius: 999px;
 }
 
 .doc-links .btn.btn-ghost:hover {
-    background: rgba(29, 78, 216, .08);
-    border-color: rgba(29, 78, 216, .24);
+    background: rgba(85, 105, 149, .08);
+    border-color: rgba(85, 105, 149, .24);
 }
 
 /* =========================================================
@@ -942,7 +942,7 @@ input:focus, textarea:focus {
     bottom: 10px;
     width: 3px;
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(29, 78, 216, .55), rgba(29, 78, 216, 0));
+    background: linear-gradient(180deg, rgba(85, 105, 149, .55), rgba(85, 105, 149, 0));
     opacity: .35;
 }
 
@@ -1036,8 +1036,8 @@ input:focus, textarea:focus {
 #contact input:focus,
 #contact textarea:focus {
     background: #fff;
-    border-color: rgba(29, 78, 216, .55);
-    box-shadow: 0 0 0 3px rgba(29, 78, 216, .14);
+    border-color: rgba(85, 105, 149, .55);
+    box-shadow: 0 0 0 3px rgba(85, 105, 149, .14);
 }
 
 /* Two-column name fields */
@@ -1064,7 +1064,7 @@ input:focus, textarea:focus {
     padding: .95rem 1.75rem;
     border-radius: 999px;
     font-weight: 750;
-    box-shadow: 0 16px 30px rgba(29, 78, 216, .22);
+    box-shadow: 0 16px 30px rgba(85, 105, 149, .22);
 }
 
 #contact #contactStatus {
@@ -1103,6 +1103,83 @@ input:focus, textarea:focus {
     background: #fff;
     border-radius: 16px;
     box-shadow: var(--shadow-sm);
+}
+
+/* =========================================================
+   SPONSOR CARDS
+========================================================= */
+.sponsor-tier-label {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: .5rem;
+    border-bottom: 2px solid rgba(85, 105, 149, .18);
+}
+
+.sponsor-tier-label--basis {
+    margin-top: 3rem;
+}
+
+.sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+}
+
+.sponsor-grid--basis {
+    grid-template-columns: minmax(280px, 480px);
+}
+
+.sponsor-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px 28px 24px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.sponsor-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.sponsor-logo-link {
+    display: flex;
+    align-items: center;
+    min-height: 72px;
+}
+
+.sponsor-logo-link img {
+    max-height: 64px;
+    max-width: 180px;
+    object-fit: contain;
+}
+
+.sponsor-desc {
+    font-size: .93rem;
+    line-height: 1.65;
+    color: var(--muted);
+    flex: 1;
+    margin: 0;
+}
+
+.sponsor-link {
+    font-size: .88rem;
+    font-weight: 600;
+    color: var(--brand);
+    text-decoration: none;
+    align-self: flex-start;
+}
+
+.sponsor-link:hover {
+    text-decoration: underline;
 }
 
 /* =========================================================
@@ -1166,8 +1243,8 @@ input:focus, textarea:focus {
 
 .social:hover {
     color: var(--brand);
-    border-color: rgba(29, 78, 216, .22);
-    background: rgba(29, 78, 216, .06);
+    border-color: rgba(85, 105, 149, .22);
+    background: rgba(85, 105, 149, .06);
     text-decoration: none
 }
 
@@ -1267,8 +1344,8 @@ body.admin {
     padding: 10px 14px;
     border-radius: 999px;
 
-    background: rgba(29, 78, 216, .06);
-    border: 1px solid rgba(29, 78, 216, .14);
+    background: rgba(85, 105, 149, .06);
+    border: 1px solid rgba(85, 105, 149, .14);
 
     box-shadow: 0 8px 18px rgba(11, 16, 32, .05);
 
@@ -1492,16 +1569,16 @@ body.admin {
     gap: 8px;
     padding: .55rem .75rem;
     border-radius: 999px;
-    border: 1px solid rgba(29, 78, 216, .18);
-    background: rgba(29, 78, 216, .06);
+    border: 1px solid rgba(85, 105, 149, .18);
+    background: rgba(85, 105, 149, .06);
     color: var(--brand);
     font-weight: 700;
     text-decoration: none;
 }
 
 .pdf-link:hover {
-    background: rgba(29, 78, 216, .10);
-    border-color: rgba(29, 78, 216, .28);
+    background: rgba(85, 105, 149, .10);
+    border-color: rgba(85, 105, 149, .28);
     text-decoration: none;
 }
 

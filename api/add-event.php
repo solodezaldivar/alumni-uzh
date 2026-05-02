@@ -200,6 +200,25 @@ if (!validateCsrf()) {
     jsonResponse(false, 'Ungültiges CSRF-Token');
 }
 
+// ── Delete action ─────────────────────────────────────────────────────────────
+if (($_POST['action'] ?? '') === 'delete') {
+    $id = sanitizeInput($_POST['id'] ?? '', 80);
+    if (!preg_match('/^evt_[\w-]+$/', $id)) {
+        jsonResponse(false, 'Ungültige Event-ID');
+    }
+    $events = loadEvents($EVENTS_FILE);
+    $before = count($events);
+    $events = array_values(array_filter($events, fn($e) => $e['id'] !== $id));
+    if (count($events) === $before) {
+        jsonResponse(false, 'Event nicht gefunden');
+    }
+    if (!saveEvents($EVENTS_FILE, $events)) {
+        jsonResponse(false, 'Konnte events.json nicht speichern');
+    }
+    $_SESSION['csrf'] = bin2hex(random_bytes(32));
+    jsonResponse(true, 'Event gelöscht');
+}
+
 // Validate required fields
 $title = sanitizeInput($_POST['title'] ?? '', 140);
 $start = sanitizeInput($_POST['start'] ?? '', 50);
