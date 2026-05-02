@@ -293,7 +293,7 @@ $publicLatestJpg = '../readme/archive/latest.jpg';
 <header class="site-header">
     <div class="container header-inner">
         <a class="brand" href="../index.html#top" aria-label="Zur Website">
-            <img src="../uploads/logos/alumni_logo_header.png" alt="UZH Alumni Informatik - Alumni.ch">
+            <img src="../uploads/logos/uzhai_banner_logo_ohne_hintergrund.png" alt="UZH Alumni Informatik - Alumni.ch">
         </a>
 
         <nav class="nav" style="margin-left:auto">
