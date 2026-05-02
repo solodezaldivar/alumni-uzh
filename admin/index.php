@@ -27,7 +27,7 @@ if (empty($_SESSION['csrf'])) {
         <nav class="admin-nav">
             <a class="active" href="/admin/" aria-current="page">Neuer Event</a>
             <a href="/admin/manage.php">Events verwalten</a>
-            <a href="/" target="_blank" rel="noopener">Website öffnen</a>
+            <a href="/" class="btn btn-ghost">← Hauptseite</a>
         </nav>
     </div>
 </header>

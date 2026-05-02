@@ -239,7 +239,7 @@ if (!empty($_GET['msg'])) {
         <nav class="admin-nav">
             <a href="/admin/">Neuer Event</a>
             <a href="/admin/manage.php" class="active" aria-current="page">Events verwalten</a>
-            <a href="/" target="_blank" rel="noopener">Website öffnen</a>
+            <a href="/" class="btn btn-ghost">← Hauptseite</a>
         </nav>
     </div>
 </header>
@@ -247,6 +247,31 @@ if (!empty($_GET['msg'])) {
 <section class="section">
     <div class="container admin-container">
         <h1>Events verwalten</h1>
+
+        <!-- PDF Import -->
+        <div class="card" style="padding:24px;margin-bottom:28px">
+            <h2 style="font-size:1.1rem;margin:0 0 6px">PDF importieren</h2>
+            <p class="muted" style="margin:0 0 16px;font-size:.9rem">
+                Liest <code>uploads/events/naechste_events.pdf</code> aus und fügt neue Events automatisch ein.
+            </p>
+            <div id="pdfImportNotice" style="display:none;padding:10px 14px;border-radius:10px;margin-bottom:12px;font-size:.9rem"></div>
+            <button id="pdfImportBtn" class="btn btn-primary" type="button">
+                Events aus PDF importieren
+            </button>
+            <div id="pdfImportPreview" style="display:none;margin-top:18px">
+                <p class="muted" style="font-size:.85rem;margin:0 0 8px" id="pdfImportSummary"></p>
+                <table style="width:100%;border-collapse:collapse;font-size:.88rem" id="pdfImportTable">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;padding:6px 8px;border-bottom:2px solid var(--line);color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em">Datum</th>
+                            <th style="text-align:left;padding:6px 8px;border-bottom:2px solid var(--line);color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em">Titel</th>
+                            <th style="text-align:left;padding:6px 8px;border-bottom:2px solid var(--line);color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em">Ort</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pdfImportBody"></tbody>
+                </table>
+            </div>
+        </div>
 
         <?php if ($error): ?>
             <div class="flash flash-error" role="alert">
@@ -389,5 +414,82 @@ if (!empty($_GET['msg'])) {
         <?php endforeach; ?>
     </div>
 </section>
+
+<script>
+(function () {
+    const btn     = document.getElementById('pdfImportBtn');
+    const notice  = document.getElementById('pdfImportNotice');
+    const preview = document.getElementById('pdfImportPreview');
+    const summary = document.getElementById('pdfImportSummary');
+    const tbody   = document.getElementById('pdfImportBody');
+
+    function showNotice(type, msg) {
+        notice.style.display = 'block';
+        notice.style.background = type === 'ok'
+            ? 'rgba(5,150,105,.07)' : 'rgba(220,38,38,.07)';
+        notice.style.border = type === 'ok'
+            ? '1px solid rgba(5,150,105,.3)' : '1px solid rgba(220,38,38,.3)';
+        notice.style.color = type === 'ok' ? '#065f46' : '#991b1b';
+        notice.textContent = msg;
+    }
+
+    function esc(s) {
+        const d = document.createElement('div');
+        d.textContent = String(s ?? '');
+        return d.innerHTML;
+    }
+
+    function fmtDate(iso) {
+        try {
+            return new Date(iso).toLocaleDateString('de-CH', {
+                day: '2-digit', month: '2-digit', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        } catch { return iso; }
+    }
+
+    btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        btn.textContent = 'Wird importiert…';
+        notice.style.display = 'none';
+        preview.style.display = 'none';
+
+        const fd = new FormData();
+        fd.append('csrf', <?= json_encode($_SESSION['csrf']) ?>);
+        fd.append('pdf_path', 'events/naechste_events.pdf');
+
+        try {
+            const res  = await fetch('/api/parse-pdf-events.php', {method: 'POST', body: fd});
+            const data = await res.json();
+
+            if (!data.ok) {
+                showNotice('err', data.message || 'Fehler beim Import');
+            } else {
+                showNotice('ok', data.message);
+
+                if (Array.isArray(data.events) && data.events.length > 0) {
+                    tbody.innerHTML = data.events.map(ev => `
+                        <tr>
+                            <td style="padding:8px;border-bottom:1px solid var(--line);white-space:nowrap">${esc(fmtDate(ev.start))}</td>
+                            <td style="padding:8px;border-bottom:1px solid var(--line)">${esc(ev.title)}</td>
+                            <td style="padding:8px;border-bottom:1px solid var(--line)">${esc(ev.location ?? '')}</td>
+                        </tr>`).join('');
+                    summary.textContent = `${data.events.length} Events aus PDF gefunden · ${data.imported} importiert · ${data.skipped} bereits vorhanden`;
+                    preview.style.display = 'block';
+                }
+
+                if (data.imported > 0) {
+                    setTimeout(() => location.reload(), 1800);
+                }
+            }
+        } catch (err) {
+            showNotice('err', 'Netzwerkfehler: ' + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Events aus PDF importieren';
+        }
+    });
+})();
+</script>
 </body>
 </html>
