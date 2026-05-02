@@ -49,13 +49,49 @@ if (!hash_equals($_SESSION['csrf'], (string) ($_POST['csrf'] ?? ''))) {
     jsonOut(false, 'Ungültiges CSRF-Token');
 }
 
-// ── Resolve PDF path ──────────────────────────────────────────────────────────
-$rel     = trim((string) ($_POST['pdf_path'] ?? 'events/naechste_events.pdf'), '/');
-$pdfPath = realpath($UPLOADS_DIR . '/' . $rel);
+// ── Resolve PDF — either an uploaded file or an existing path ────────────────
+$eventsDir = $UPLOADS_DIR . '/events';
+if (!is_dir($eventsDir)) {
+    mkdir($eventsDir, 0755, true);
+}
 
-// Prevent path traversal: resolved path must stay inside uploads/
-if (!$pdfPath || !str_starts_with($pdfPath, $UPLOADS_DIR . '/') || !is_file($pdfPath)) {
-    jsonOut(false, 'PDF nicht gefunden: ' . htmlspecialchars($rel));
+if (!empty($_FILES['events_pdf']['name'])) {
+    // File upload path: validate, save to uploads/events/naechste_events.pdf
+    $upload = $_FILES['events_pdf'];
+
+    if ($upload['error'] !== UPLOAD_ERR_OK) {
+        $errMap = [
+            UPLOAD_ERR_INI_SIZE   => 'Datei zu gross (php.ini upload_max_filesize)',
+            UPLOAD_ERR_FORM_SIZE  => 'Datei zu gross (MAX_FILE_SIZE)',
+            UPLOAD_ERR_PARTIAL    => 'Datei nur teilweise hochgeladen',
+            UPLOAD_ERR_NO_FILE    => 'Keine Datei ausgewählt',
+            UPLOAD_ERR_NO_TMP_DIR => 'Kein temporäres Verzeichnis',
+            UPLOAD_ERR_CANT_WRITE => 'Schreibfehler auf Disk',
+        ];
+        jsonOut(false, $errMap[$upload['error']] ?? 'Upload-Fehler ' . $upload['error']);
+    }
+
+    // Verify it is actually a PDF
+    $fh   = fopen($upload['tmp_name'], 'rb');
+    $head = $fh ? fread($fh, 5) : '';
+    if ($fh) fclose($fh);
+    if ($head !== '%PDF-') {
+        jsonOut(false, 'Die hochgeladene Datei ist keine gültige PDF');
+    }
+
+    $dest = $eventsDir . '/naechste_events.pdf';
+    if (!move_uploaded_file($upload['tmp_name'], $dest)) {
+        jsonOut(false, 'PDF konnte nicht gespeichert werden (Rechte?)');
+    }
+    $pdfPath = $dest;
+} else {
+    // Fallback: use an existing file in uploads/
+    $rel     = trim((string) ($_POST['pdf_path'] ?? 'events/naechste_events.pdf'), '/');
+    $pdfPath = realpath($UPLOADS_DIR . '/' . $rel);
+
+    if (!$pdfPath || !str_starts_with($pdfPath, $UPLOADS_DIR . '/') || !is_file($pdfPath)) {
+        jsonOut(false, 'PDF nicht gefunden: ' . htmlspecialchars($rel));
+    }
 }
 
 // ── shell_exec available? ─────────────────────────────────────────────────────

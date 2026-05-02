@@ -342,7 +342,137 @@ $publicLatestJpg = '../readme/archive/latest.jpg';
             </div>
         </form>
     </section>
+
+    <div style="height:32px"></div>
+
+    <!-- ── Events PDF Import ──────────────────────────────────────────── -->
+    <div class="admin-head">
+        <div>
+            <h2 style="margin:0 0 6px">Events Import</h2>
+            <p style="margin:0;color:rgba(91,98,115,.92);font-size:.95rem">
+                Jahresprogramm-PDF hochladen – Events werden automatisch eingelesen und auf der Website angezeigt.
+            </p>
+        </div>
+    </div>
+
+    <div style="height:14px"></div>
+
+    <div id="eventsNotice" class="notice" style="display:none"></div>
+    <div style="height:10px" id="eventsNoticeSpacer" style="display:none"></div>
+
+    <section class="card" style="padding:26px;border-radius:22px">
+        <form id="eventsImportForm" class="admin-form" enctype="multipart/form-data" autocomplete="off" novalidate>
+            <input type="hidden" name="csrf" id="eventsCsrf" value="<?= h((string)($_SESSION['csrf'] ?? '')) ?>">
+
+            <label class="file">
+                Jahresprogramm PDF
+                <input type="file" name="events_pdf" id="eventsPdfInput" accept="application/pdf,.pdf" required>
+                <span style="font-size:.85rem;color:rgba(91,98,115,.8);font-weight:400;margin-top:4px">
+                    Die Datei wird als <code>uploads/events/naechste_events.pdf</code> gespeichert.
+                </span>
+            </label>
+
+            <div class="admin-actions">
+                <button class="btn btn-primary" type="submit" id="eventsImportBtn">
+                    Importieren
+                </button>
+            </div>
+        </form>
+
+        <div id="eventsPreview" style="display:none;margin-top:24px;border-top:1px solid rgba(15,23,42,.08);padding-top:20px">
+            <p id="eventsPreviewSummary" style="margin:0 0 12px;font-size:.9rem;color:rgba(91,98,115,.92)"></p>
+            <div style="overflow-x:auto">
+                <table style="width:100%;border-collapse:collapse;font-size:.88rem">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid rgba(15,23,42,.1);color:rgba(91,98,115,.9);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700">Datum</th>
+                            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid rgba(15,23,42,.1);color:rgba(91,98,115,.9);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700">Titel</th>
+                            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid rgba(15,23,42,.1);color:rgba(91,98,115,.9);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700">Ort</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsPreviewBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 </main>
+
+<script>
+(function () {
+    const form    = document.getElementById('eventsImportForm');
+    const btn     = document.getElementById('eventsImportBtn');
+    const notice  = document.getElementById('eventsNotice');
+    const preview = document.getElementById('eventsPreview');
+    const summary = document.getElementById('eventsPreviewSummary');
+    const tbody   = document.getElementById('eventsPreviewBody');
+
+    function showNotice(type, msg) {
+        notice.className = 'notice ' + type;
+        notice.textContent = msg;
+        notice.style.display = 'block';
+    }
+
+    function esc(s) {
+        const d = document.createElement('div');
+        d.textContent = String(s ?? '');
+        return d.innerHTML;
+    }
+
+    function fmtDate(iso) {
+        try {
+            return new Date(iso).toLocaleDateString('de-CH', {
+                day: '2-digit', month: '2-digit', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        } catch { return iso; }
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const file = document.getElementById('eventsPdfInput').files[0];
+        if (!file) { showNotice('err', 'Bitte eine PDF-Datei auswählen.'); return; }
+
+        btn.disabled = true;
+        btn.textContent = 'Wird verarbeitet…';
+        notice.style.display = 'none';
+        preview.style.display = 'none';
+
+        const fd = new FormData(form);
+
+        try {
+            const res  = await fetch('../api/parse-pdf-events.php', { method: 'POST', body: fd });
+            const data = await res.json();
+
+            // Update CSRF token for next request
+            if (data.csrf) document.getElementById('eventsCsrf').value = data.csrf;
+
+            if (!data.ok) {
+                showNotice('err', data.message || 'Fehler beim Import');
+            } else {
+                showNotice('ok', data.message);
+
+                if (Array.isArray(data.events) && data.events.length > 0) {
+                    tbody.innerHTML = data.events.map(ev => `
+                        <tr>
+                            <td style="padding:9px 10px;border-bottom:1px solid rgba(15,23,42,.07);white-space:nowrap">${esc(fmtDate(ev.start))}</td>
+                            <td style="padding:9px 10px;border-bottom:1px solid rgba(15,23,42,.07)">${esc(ev.title)}</td>
+                            <td style="padding:9px 10px;border-bottom:1px solid rgba(15,23,42,.07);color:rgba(91,98,115,.9)">${esc(ev.location ?? '—')}</td>
+                        </tr>`).join('');
+                    summary.textContent =
+                        `${data.events.length} Events im PDF · ${data.imported} neu importiert · ${data.skipped} bereits vorhanden`;
+                    preview.style.display = 'block';
+                }
+            }
+        } catch (err) {
+            showNotice('err', 'Netzwerkfehler: ' + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Importieren';
+        }
+    });
+})();
+</script>
 
 </body>
 </html>
