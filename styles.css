@@ -1525,3 +1525,456 @@ body.admin {
         margin-top: 6px;
     }
 }
+
+/* =========================================================
+   EVENTS — premium swiss table (4 cols: DT | Event | Ort | Bem.)
+   Keep this as the ONLY events table styling block.
+========================================================= */
+
+/* Card wrapper */
+#events .events-card.card,
+.events-card.card {
+    padding: 0 !important;
+    overflow: hidden;
+    border-radius: 22px;
+    border: 1px solid rgba(15, 23, 42, .08);
+    box-shadow: var(--shadow-md);
+    background: radial-gradient(900px 280px at 12% -55%, rgba(29, 78, 216, .09), transparent 56%),
+    linear-gradient(180deg, rgba(255, 255, 255, .97), rgba(248, 250, 252, .97));
+}
+
+/* Top bar */
+.events-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(15, 23, 42, .07);
+}
+
+#eventsCount {
+    color: rgba(91, 98, 115, .95);
+    font-weight: 750;
+    letter-spacing: -0.01em;
+}
+
+/* Search */
+.events-search {
+    position: relative;
+    width: min(420px, 100%);
+}
+
+.events-search input {
+    width: 100%;
+    padding: .78rem 1rem .78rem 2.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 23, 42, .10);
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 1px 0 rgba(15, 23, 42, .03) inset,
+    0 10px 26px rgba(11, 16, 32, .06);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+}
+
+.events-search input:focus {
+    outline: none;
+    border-color: rgba(29, 78, 216, .55);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, .14),
+    0 12px 28px rgba(11, 16, 32, .07);
+    background: #fff;
+}
+
+.events-search::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    opacity: .55;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z' stroke='%235b6273' stroke-width='2'/%3E%3Cpath d='M16.2 16.2 21 21' stroke='%235b6273' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Table wrap */
+.events-table-wrap {
+    padding: 14px 14px 18px;
+}
+
+/* Table base */
+.events-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid rgba(15, 23, 42, .08);
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .92);
+}
+
+/* Head */
+.events-table thead th {
+    text-align: left;
+    padding: 12px 14px;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+    color: rgba(91, 98, 115, .95);
+    font-weight: 850;
+    background: linear-gradient(180deg, rgba(248, 250, 252, .98), rgba(255, 255, 255, .98));
+    border-bottom: 1px solid rgba(15, 23, 42, .08);
+    white-space: nowrap;
+}
+
+/* Body cells */
+.events-table tbody td {
+    padding: 16px 14px;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(15, 23, 42, .06);
+    color: rgba(11, 16, 32, .92);
+    line-height: 1.45;
+}
+
+.events-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.events-table tbody tr:nth-child(even) td {
+    background: rgba(29, 78, 216, .012);
+}
+
+/* Combined date/time column */
+.events-dt {
+    white-space: nowrap;
+    font-weight: 850;
+    letter-spacing: -0.01em;
+    color: rgba(11, 16, 32, .92);
+}
+
+.events-dt-main {
+    font-weight: 850;
+}
+
+.events-dt-sub {
+    margin-top: 6px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Event column */
+.events-title {
+    font-weight: 850;
+    letter-spacing: -0.01em;
+    color: rgba(11, 16, 32, .96);
+}
+
+/* Ort / Bemerkungen */
+.events-loc {
+    color: rgba(11, 16, 32, .84);
+    font-weight: 650;
+}
+
+.events-notes-cell,
+.events-notes {
+    color: rgba(11, 16, 32, .78);
+    font-weight: 650;
+}
+
+/* Hover “Swiss accent” */
+.events-table tbody tr {
+    position: relative;
+    transition: transform .18s ease;
+}
+
+.events-table tbody tr::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(29, 78, 216, .85), rgba(29, 78, 216, 0));
+    opacity: 0;
+    transform: translateX(-1px);
+    transition: opacity .18s ease, transform .18s ease;
+}
+
+.events-table tbody tr:hover td {
+    background: rgba(29, 78, 216, .03);
+}
+
+.events-table tbody tr:hover::before {
+    opacity: .55;
+    transform: translateX(0);
+}
+
+@media (hover: hover) {
+    .events-table tbody tr:hover {
+        transform: translateY(-1px);
+    }
+}
+
+/* Mobile: labeled rows */
+@media (max-width: 920px) {
+    .events-table thead {
+        display: none;
+    }
+
+    .events-table, .events-table tbody, .events-table tr, .events-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .events-table tbody tr {
+        border-bottom: 1px solid rgba(15, 23, 42, .08);
+        transform: none !important;
+    }
+
+    .events-table tbody td {
+        border: 0;
+        padding: 10px 14px;
+        background: transparent !important;
+    }
+
+    .events-table tbody td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: .72rem;
+        text-transform: uppercase;
+        letter-spacing: .09em;
+        color: rgba(91, 98, 115, .95);
+        font-weight: 850;
+        margin-bottom: 4px;
+    }
+
+    .events-dt {
+        white-space: normal;
+    }
+}
+
+/* =========================================================
+   EVENTS — fix hover accent line (table-row pseudo elements are flaky)
+   Paste at VERY END of styles.css
+========================================================= */
+
+/* Disable the row pseudo-element accent (this is what's causing the stuck blue line) */
+.events-table tbody tr::before {
+    content: none !important;
+}
+
+/* Create the accent line inside the first column cell instead */
+.events-table tbody td.events-dt {
+    position: relative;
+    padding-left: 18px; /* room for the accent line */
+}
+
+/* subtle vertical accent line (only on hover) */
+.events-table tbody td.events-dt::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 14px;
+    bottom: 14px;
+    width: 2px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(29, 78, 216, .85), rgba(29, 78, 216, 0));
+    opacity: 0;
+    transform: translateX(-1px);
+    transition: opacity .18s ease, transform .18s ease;
+}
+
+.events-table tbody tr:hover td.events-dt::before {
+    opacity: .55;
+    transform: translateX(0);
+}
+
+/* Keep hover feel “expensive”, but calm */
+.events-table tbody tr:hover td {
+    background: rgba(29, 78, 216, .03);
+}
+
+/* =========================================================
+   EVENTS — Swiss premium polish (4 cols)
+   Paste at VERY END of styles.css
+========================================================= */
+
+/* Card: slightly more “crafted” surface */
+#events .card,
+.events-card.card {
+    background: radial-gradient(900px 280px at 12% -55%, rgba(29, 78, 216, .08), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(248, 250, 252, .98));
+}
+
+/* Toolbar: tighter, more editorial */
+.events-toolbar {
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(15, 23, 42, .06);
+}
+
+#eventsCount {
+    font-weight: 760;
+    color: rgba(11, 16, 32, .72);
+}
+
+.events-search input {
+    border-color: rgba(15, 23, 42, .10);
+}
+
+/* Wrap: keep it crisp */
+.events-table-wrap {
+    padding: 14px 16px 18px;
+}
+
+/* Table container: softer frame + “inner” highlight */
+.events-table {
+    border: 1px solid rgba(15, 23, 42, .08);
+    border-radius: 18px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(255, 255, 255, .90));
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset,
+    0 16px 38px rgba(11, 16, 32, .06);
+}
+
+/* Header: more premium than a plain grey bar */
+.events-table thead th {
+    padding: 13px 16px;
+    font-size: .74rem;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+    font-weight: 850;
+    color: rgba(91, 98, 115, .92);
+    background: linear-gradient(180deg, rgba(248, 250, 252, 1), rgba(255, 255, 255, 1));
+    border-bottom: 1px solid rgba(15, 23, 42, .07);
+}
+
+/* Row separators: thinner + cleaner */
+.events-table tbody td {
+    padding: 18px 16px;
+    border-bottom: 1px solid rgba(15, 23, 42, .06);
+    line-height: 1.5;
+    color: rgba(11, 16, 32, .90);
+}
+
+.events-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+/* Very subtle zebra (less “cheap spreadsheet”) */
+.events-table tbody tr:nth-child(even) td {
+    background: rgba(2, 6, 23, .012);
+}
+
+/* Hover: gentle elevation + sheen */
+.events-table tbody tr {
+    transition: transform .16s ease, filter .16s ease;
+}
+
+@media (hover: hover) {
+    .events-table tbody tr:hover {
+        transform: translateY(-1px);
+        filter: drop-shadow(0 10px 22px rgba(11, 16, 32, .06));
+    }
+
+    .events-table tbody tr:hover td {
+        background: rgba(29, 78, 216, .028);
+    }
+}
+
+/* === Column hierarchy === */
+
+/* Date/Time column: strong but compact */
+.events-table td.events-dt {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    font-weight: 820;
+    letter-spacing: -0.012em;
+    color: rgba(11, 16, 32, .92);
+}
+
+/* Accent line (inside first cell) — refined */
+.events-table td.events-dt {
+    position: relative;
+    padding-left: 22px; /* room for line */
+}
+
+.events-table td.events-dt::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 16px;
+    bottom: 16px;
+    width: 2px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(29, 78, 216, .85), rgba(29, 78, 216, 0));
+    opacity: 0;
+    transform: translateX(-1px);
+    transition: opacity .18s ease, transform .18s ease;
+}
+
+.events-table tbody tr:hover td.events-dt::before {
+    opacity: .45;
+    transform: translateX(0);
+}
+
+/* Title: slightly heavier, tighter line-height */
+.events-table td.events-title {
+    font-weight: 830;
+    letter-spacing: -0.012em;
+    color: rgba(11, 16, 32, .94);
+}
+
+.events-table td.events-title {
+    line-height: 1.35;
+}
+
+/* Location: calmer + slightly smaller */
+.events-table td.events-loc {
+    font-weight: 650;
+    color: rgba(11, 16, 32, .78);
+    letter-spacing: -0.004em;
+}
+
+/* Notes: calm, not competing */
+.events-table td.events-notes-cell {
+    font-weight: 650;
+    color: rgba(11, 16, 32, .74);
+}
+
+/* If notes are long, improve wrapping */
+.events-table td.events-title,
+.events-table td.events-loc,
+.events-table td.events-notes-cell {
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Responsive: keep your current “stacked labels” behavior
+   (only applies if you use the data-label approach) */
+@media (max-width: 920px) {
+    .events-table {
+        box-shadow: 0 10px 26px rgba(11, 16, 32, .06);
+    }
+
+    .events-table tbody tr:hover {
+        transform: none;
+        filter: none;
+    }
+}
+
+.nav .btn.btn-primary,
+.nav .btn.btn-primary:visited {
+    color: #ffffff !important;
+}
+
+/* Keep it white on hover/focus */
+.nav .btn.btn-primary:hover,
+.nav .btn.btn-primary:focus {
+    color: #ffffff !important;
+}

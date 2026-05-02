@@ -29,7 +29,6 @@ if ($archiveFsDir && is_dir($archiveFsDir)) {
     foreach ($files as $f) {
         if ($f === '.' || $f === '..') continue;
 
-        // readme54_25.pdf / readme54_25.jpg
         if (!preg_match('~^(readme(\d+)_([0-9]{2}))\.(pdf|jpg)$~i', $f, $m)) continue;
 
         $base = $m[1];        // readme54_25
@@ -160,23 +159,23 @@ krsort($byYear); // year desc
                                             <div class="issue-sub muted"><?= h($subtitle) ?></div>
                                         </div>
 
-                                        <div class="archive-item-actions">
-                                            <a class="pdf-link" href="<?= h($pdf) ?>" target="_blank" rel="noopener">
-                                                <span class="pdf-ic" aria-hidden="true">
-                                                    <svg viewBox="0 0 24 24" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7 3h7l4 4v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
-                                                              stroke="currentColor" stroke-width="2"
-                                                              stroke-linejoin="round"/>
-                                                        <path d="M14 3v5h5" stroke="currentColor" stroke-width="2"
-                                                              stroke-linejoin="round"/>
-                                                        <path d="M8 17h8M8 13h8M8 9h4" stroke="currentColor"
-                                                              stroke-width="2" stroke-linecap="round"/>
-                                                    </svg>
-                                                </span>
-                                                PDF
-                                            </a>
-                                        </div>
+<!--                                        <div class="archive-item-actions">-->
+<!--                                            <a class="pdf-link" href="--><?php //= h($pdf) ?><!--" target="_blank" rel="noopener">-->
+<!--                                                <span class="pdf-ic" aria-hidden="true">-->
+<!--                                                    <svg viewBox="0 0 24 24" fill="none"-->
+<!--                                                         xmlns="http://www.w3.org/2000/svg">-->
+<!--                                                        <path d="M7 3h7l4 4v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"-->
+<!--                                                              stroke="currentColor" stroke-width="2"-->
+<!--                                                              stroke-linejoin="round"/>-->
+<!--                                                        <path d="M14 3v5h5" stroke="currentColor" stroke-width="2"-->
+<!--                                                              stroke-linejoin="round"/>-->
+<!--                                                        <path d="M8 17h8M8 13h8M8 9h4" stroke="currentColor"-->
+<!--                                                              stroke-width="2" stroke-linecap="round"/>-->
+<!--                                                    </svg>-->
+<!--                                                </span>-->
+<!--                                                PDF-->
+<!--                                            </a>-->
+<!--                                        </div>-->
                                     </div>
                                 <?php endforeach; ?>
                             </div>
