@@ -350,7 +350,7 @@ $publicLatestJpg = '../readme/archive/latest.jpg';
         <div>
             <h2 style="margin:0 0 6px">Events Import</h2>
             <p style="margin:0;color:rgba(91,98,115,.92);font-size:.95rem">
-                Jahresprogramm-PDF hochladen – Events werden automatisch eingelesen und auf der Website angezeigt.
+                Jahresprogramm-PDF hochladen – Events werden direkt im Browser erkannt und zur Prüfung angezeigt.
             </p>
         </div>
     </div>
@@ -358,120 +358,206 @@ $publicLatestJpg = '../readme/archive/latest.jpg';
     <div style="height:14px"></div>
 
     <div id="eventsNotice" class="notice" style="display:none"></div>
-    <div style="height:10px" id="eventsNoticeSpacer" style="display:none"></div>
 
     <section class="card" style="padding:26px;border-radius:22px">
-        <form id="eventsImportForm" class="admin-form" enctype="multipart/form-data" autocomplete="off" novalidate>
-            <input type="hidden" name="csrf" id="eventsCsrf" value="<?= h((string)($_SESSION['csrf'] ?? '')) ?>">
 
-            <label class="file">
-                Jahresprogramm PDF
-                <input type="file" name="events_pdf" id="eventsPdfInput" accept="application/pdf,.pdf" required>
-                <span style="font-size:.85rem;color:rgba(91,98,115,.8);font-weight:400;margin-top:4px">
-                    Die Datei wird als <code>uploads/events/naechste_events.pdf</code> gespeichert.
-                </span>
+        <!-- Step 1: file picker -->
+        <div id="stepPick">
+            <label class="file" style="display:block">
+                <span style="font-weight:700;font-size:.95rem">Jahresprogramm PDF auswählen</span>
+                <input type="file" id="eventsPdfInput" accept="application/pdf,.pdf"
+                       style="margin-top:8px;width:100%">
             </label>
-
-            <div class="admin-actions">
-                <button class="btn btn-primary" type="submit" id="eventsImportBtn">
-                    Importieren
-                </button>
+            <div id="parseSpinner" style="display:none;margin-top:14px;color:rgba(91,98,115,.9);font-size:.9rem">
+                ⏳ PDF wird analysiert…
             </div>
-        </form>
+        </div>
 
-        <div id="eventsPreview" style="display:none;margin-top:24px;border-top:1px solid rgba(15,23,42,.08);padding-top:20px">
-            <p id="eventsPreviewSummary" style="margin:0 0 12px;font-size:.9rem;color:rgba(91,98,115,.92)"></p>
+        <!-- Step 2: preview + confirm (hidden until parsing done) -->
+        <div id="stepPreview" style="display:none;margin-top:24px;border-top:1px solid rgba(15,23,42,.08);padding-top:20px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+                <p id="previewSummary" style="margin:0;font-size:.92rem;color:rgba(91,98,115,.92)"></p>
+                <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <button id="btnReset" class="btn btn-ghost" type="button">Andere PDF wählen</button>
+                    <button id="btnImport" class="btn btn-primary" type="button">Importieren</button>
+                </div>
+            </div>
             <div style="overflow-x:auto">
-                <table style="width:100%;border-collapse:collapse;font-size:.88rem">
+                <table style="width:100%;border-collapse:collapse;font-size:.875rem">
                     <thead>
                         <tr>
-                            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid rgba(15,23,42,.1);color:rgba(91,98,115,.9);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700">Datum</th>
-                            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid rgba(15,23,42,.1);color:rgba(91,98,115,.9);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700">Titel</th>
-                            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid rgba(15,23,42,.1);color:rgba(91,98,115,.9);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700">Ort</th>
+                            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid rgba(15,23,42,.1);color:rgba(91,98,115,.9);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em">Datum</th>
+                            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid rgba(15,23,42,.1);color:rgba(91,98,115,.9);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em">Titel</th>
+                            <th style="text-align:left;padding:6px 10px;border-bottom:2px solid rgba(15,23,42,.1);color:rgba(91,98,115,.9);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em">Ort</th>
                         </tr>
                     </thead>
-                    <tbody id="eventsPreviewBody"></tbody>
+                    <tbody id="previewBody"></tbody>
                 </table>
             </div>
         </div>
+
     </section>
 </main>
 
+<!-- PDF.js (runs entirely in the browser – no Python needed) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- Parser logic (same source as admin/events-parser.js, inlined to avoid path issues) -->
 <script>
-(function () {
-    const form    = document.getElementById('eventsImportForm');
-    const btn     = document.getElementById('eventsImportBtn');
-    const notice  = document.getElementById('eventsNotice');
-    const preview = document.getElementById('eventsPreview');
-    const summary = document.getElementById('eventsPreviewSummary');
-    const tbody   = document.getElementById('eventsPreviewBody');
+<?php echo file_get_contents(__DIR__ . '/events-parser.js'); ?>
+</script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-    function showNotice(type, msg) {
-        notice.className = 'notice ' + type;
-        notice.textContent = msg;
-        notice.style.display = 'block';
-    }
+async function parsePdf(file) {
+    const buf = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+    const numPages = pdf.numPages;
 
-    function esc(s) {
-        const d = document.createElement('div');
-        d.textContent = String(s ?? '');
-        return d.innerHTML;
-    }
+    const allLines = [];
 
-    function fmtDate(iso) {
-        try {
-            return new Date(iso).toLocaleDateString('de-CH', {
-                day: '2-digit', month: '2-digit', year: 'numeric',
-                hour: '2-digit', minute: '2-digit'
-            });
-        } catch { return iso; }
-    }
+    for (let p = 1; p <= numPages; p++) {
+        const page    = await pdf.getPage(p);
+        const content = await page.getTextContent();
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const file = document.getElementById('eventsPdfInput').files[0];
-        if (!file) { showNotice('err', 'Bitte eine PDF-Datei auswählen.'); return; }
-
-        btn.disabled = true;
-        btn.textContent = 'Wird verarbeitet…';
-        notice.style.display = 'none';
-        preview.style.display = 'none';
-
-        const fd = new FormData(form);
-
-        try {
-            const res  = await fetch('../api/parse-pdf-events.php', { method: 'POST', body: fd });
-            const data = await res.json();
-
-            // Update CSRF token for next request
-            if (data.csrf) document.getElementById('eventsCsrf').value = data.csrf;
-
-            if (!data.ok) {
-                showNotice('err', data.message || 'Fehler beim Import');
+        // Group text items into lines by y-coordinate (±2 pt tolerance)
+        const lineMap = [];
+        for (const item of content.items) {
+            if (!item.str.trim()) continue;
+            const x = Math.round(item.transform[4]);
+            const y = Math.round(item.transform[5]);
+            const existing = lineMap.find(l => Math.abs(l.y - y) <= 2);
+            if (existing) {
+                existing.items.push({ x, text: item.str });
             } else {
-                showNotice('ok', data.message);
-
-                if (Array.isArray(data.events) && data.events.length > 0) {
-                    tbody.innerHTML = data.events.map(ev => `
-                        <tr>
-                            <td style="padding:9px 10px;border-bottom:1px solid rgba(15,23,42,.07);white-space:nowrap">${esc(fmtDate(ev.start))}</td>
-                            <td style="padding:9px 10px;border-bottom:1px solid rgba(15,23,42,.07)">${esc(ev.title)}</td>
-                            <td style="padding:9px 10px;border-bottom:1px solid rgba(15,23,42,.07);color:rgba(91,98,115,.9)">${esc(ev.location ?? '—')}</td>
-                        </tr>`).join('');
-                    summary.textContent =
-                        `${data.events.length} Events im PDF · ${data.imported} neu importiert · ${data.skipped} bereits vorhanden`;
-                    preview.style.display = 'block';
-                }
+                lineMap.push({ y, items: [{ x, text: item.str }] });
             }
-        } catch (err) {
-            showNotice('err', 'Netzwerkfehler: ' + err.message);
-        } finally {
-            btn.disabled = false;
-            btn.textContent = 'Importieren';
         }
-    });
-})();
+
+        for (const l of lineMap) {
+            l.items.sort((a, b) => a.x - b.x);
+            const text = l.items.map(i => i.text).join(' ').trim();
+            if (text) {
+                // Give each line a global y so pages don't have overlapping coordinates.
+                // Page 1 top > page 1 bottom > page 2 top > page 2 bottom.
+                const globalY = (numPages - p) * 10000 + l.y;
+                allLines.push({ y: globalY, x0: l.items[0].x, text });
+            }
+        }
+    }
+
+    allLines.sort((a, b) => b.y - a.y);
+    return buildEvents(allLines);
+}
+
+// ── UI wiring ─────────────────────────────────────────────────────────────────
+const input    = document.getElementById('eventsPdfInput');
+const spinner  = document.getElementById('parseSpinner');
+const stepPick = document.getElementById('stepPick');
+const stepPrev = document.getElementById('stepPreview');
+const notice   = document.getElementById('eventsNotice');
+const summary  = document.getElementById('previewSummary');
+const tbody    = document.getElementById('previewBody');
+const btnReset = document.getElementById('btnReset');
+const btnImp   = document.getElementById('btnImport');
+
+let parsedEvents = [];
+
+function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = String(s ?? '');
+    return d.innerHTML;
+}
+
+function fmtDate(iso) {
+    try {
+        return new Date(iso).toLocaleDateString('de-CH',
+            { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    } catch { return iso; }
+}
+
+function showNotice(type, msg) {
+    notice.className = 'notice ' + type;
+    notice.textContent = msg;
+    notice.style.display = msg ? 'block' : 'none';
+}
+
+function resetToStep1() {
+    input.value       = '';
+    parsedEvents      = [];
+    stepPrev.style.display = 'none';
+    stepPick.style.display = 'block';
+    showNotice('', '');
+}
+
+// Parse as soon as a file is chosen
+input.addEventListener('change', async () => {
+    const file = input.files[0];
+    if (!file) return;
+
+    showNotice('', '');
+    spinner.style.display = 'block';
+
+    try {
+        parsedEvents = await parsePdf(file);
+    } catch (e) {
+        spinner.style.display = 'none';
+        showNotice('err', 'PDF konnte nicht gelesen werden: ' + e.message);
+        return;
+    }
+
+    spinner.style.display = 'none';
+
+    if (!parsedEvents.length) {
+        showNotice('err', 'Keine Events im PDF gefunden. Ist es das richtige Jahresprogramm?');
+        return;
+    }
+
+    // Render preview table
+    tbody.innerHTML = parsedEvents.map(ev => `
+        <tr>
+            <td style="padding:9px 10px;border-bottom:1px solid rgba(15,23,42,.07);white-space:nowrap">${esc(fmtDate(ev.start))}</td>
+            <td style="padding:9px 10px;border-bottom:1px solid rgba(15,23,42,.07)">${esc(ev.title)}</td>
+            <td style="padding:9px 10px;border-bottom:1px solid rgba(15,23,42,.07);color:rgba(91,98,115,.9)">${esc(ev.location ?? '—')}</td>
+        </tr>`).join('');
+
+    summary.textContent = `${parsedEvents.length} Events gefunden – alles korrekt? Dann importieren.`;
+    stepPrev.style.display = 'block';
+});
+
+btnReset.addEventListener('click', resetToStep1);
+
+// Commit parsed events to server
+btnImp.addEventListener('click', async () => {
+    if (!parsedEvents.length) return;
+
+    btnImp.disabled = true;
+    btnImp.textContent = 'Wird gespeichert…';
+    showNotice('', '');
+
+    const fd = new FormData();
+    fd.append('csrf',        <?= json_encode($_SESSION['csrf'] ?? '') ?>);
+    fd.append('events_json', JSON.stringify(parsedEvents));
+
+    try {
+        const res  = await fetch('../api/parse-pdf-events.php', { method: 'POST', body: fd });
+        const data = await res.json();
+
+        if (!data.ok) {
+            showNotice('err', data.message || 'Fehler beim Speichern');
+        } else {
+            showNotice('ok', data.message);
+            summary.textContent =
+                `${parsedEvents.length} Events im PDF · ${data.imported} neu importiert · ${data.skipped} bereits vorhanden`;
+            btnImp.style.display = 'none';
+        }
+    } catch (e) {
+        showNotice('err', 'Netzwerkfehler: ' + e.message);
+    } finally {
+        btnImp.disabled  = false;
+        btnImp.textContent = 'Importieren';
+    }
+});
 </script>
 
 </body>
