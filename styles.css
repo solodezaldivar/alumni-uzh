@@ -2060,3 +2060,74 @@ body.admin {
 .nav .btn.btn-primary:focus {
     color: #ffffff !important;
 }
+/* Modal */
+.modal {
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(11, 16, 32, .18);
+}
+
+.modal::backdrop {
+    background: rgba(11, 16, 32, .45);
+    backdrop-filter: blur(2px);
+}
+
+.modal-inner {
+    padding: 2rem;
+}
+
+.modal-inner p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0 0 0.9rem;
+}
+
+.modal-inner p:last-child {
+    margin-bottom: 0;
+}
+
+.modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.modal-head h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--muted);
+    padding: 0 0.25rem;
+}
+
+.modal-close:hover {
+    color: var(--fg);
+}
+
+.impressum-table {
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    width: 100%;
+}
+
+.impressum-table td {
+    padding: 0.4rem 1.5rem 0.4rem 0;
+    vertical-align: top;
+}
+
+.impressum-table td:first-child {
+    font-weight: 600;
+    white-space: nowrap;
+}

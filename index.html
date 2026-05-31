@@ -507,14 +507,46 @@
     </div>
 </section>
 
+<dialog id="impressumModal" class="modal" aria-labelledby="impressumTitle">
+    <div class="modal-inner">
+        <div class="modal-head">
+            <h2 id="impressumTitle">Impressum</h2>
+            <button class="modal-close" aria-label="Schliessen">&times;</button>
+        </div>
+        <table class="impressum-table">
+            <tr>
+                <td>Redaktion:</td>
+                <td>UZH Alumni Informatik</td>
+            </tr>
+            <tr>
+                <td>Hosting:</td>
+                <td>NetZone AG, <a href="https://www.netzone.ch" target="_blank" rel="noopener">www.netzone.ch</a></td>
+            </tr>
+        </table>
+    </div>
+</dialog>
+
+<dialog id="nutzungModal" class="modal" aria-labelledby="nutzungTitle">
+    <div class="modal-inner">
+        <div class="modal-head">
+            <h2 id="nutzungTitle">Nutzungsbedingungen</h2>
+            <button class="modal-close" aria-label="Schliessen">&times;</button>
+        </div>
+        <p>Die veröffentlichten Inhalte sind ausschliesslich zum persönlichen Gebrauch bestimmt. Die Vervielfältigung, Publikation oder Speicherung in Datenbanken, jegliche kommerzielle Nutzung sowie die Weitergabe an Dritte sind nicht gestattet.</p>
+        <p>Die Nutzung von Links, die von dieser Website auf Websites Dritter führen, erfolgt auf eigene Verantwortung und Gefahr. Alumni Informatik Universität Zürich übernimmt keine Verantwortung für Inhalte anderer Websites, die durch Links geöffnet wurden, und lehnt jede Haftung für deren Inhalte, Produkte und Dienstleistungen oder sonstige Angebote ab.</p>
+        <p>Informationen und Angaben auf dieser Webseite erfolgen ohne Gewähr.</p>
+        <p>Haftungsansprüche gegen die Alumni Informatik Universität Zürich wegen Schäden materieller oder immaterieller Art, die aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen, durch Missbrauch der Verbindung oder durch technische Störungen entstanden sind, werden ausgeschlossen.</p>
+    </div>
+</dialog>
+
 <footer class="footer">
     <div class="container footer-inner">
         <p>© <span id="y"></span> UZH Alumni Informatik · Zürich</p>
         <div class="footer-right">
             <nav class="footer-nav" aria-label="Footer Navigation">
                 <a href="#top">Top</a>
-                <a href="#" onclick="alert('Impressum folgt');return false;">Impressum</a>
-                <a href="#" onclick="alert('Nutzungsbedingungen folgen');return false;">Nutzungs­bedingungen</a>
+                <a href="#" id="impressumLink">Impressum</a>
+                <a href="#" id="nutzungLink">Nutzungs­bedingungen</a>
             </nav>
 
             <div class="social-links" aria-label="Social Media">
@@ -854,6 +886,16 @@
         ]);
         render();
     })();
+
+    // Impressum modal
+    function initModal(modalId, linkId) {
+        const modal = document.getElementById(modalId);
+        document.getElementById(linkId).addEventListener('click', e => { e.preventDefault(); modal.showModal(); });
+        modal.querySelector('.modal-close').addEventListener('click', () => modal.close());
+        modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+    }
+    initModal('impressumModal', 'impressumLink');
+    initModal('nutzungModal', 'nutzungLink');
 </script>
 </body>
 </html>
