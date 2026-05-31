@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 // --- CONFIG ---
-const TO_EMAIL   = 'info@alumni.ch'; // where to receive messages
-const FROM_EMAIL = 'webform@your-domain.tld'; //TODO: setzen
-const SUBJECT_PREFIX = '[UZH.AI Kontakt]';
+const TO_EMAIL   = 'info@alumni.ch';
+const FROM_EMAIL = 'webseite@alumni.ch';
+const SUBJECT_PREFIX = '[Kontakt Webseite]';
 
 // --- CORS/Headers (optional basic) ---
 header('Content-Type: application/json; charset=utf-8');
@@ -16,18 +16,11 @@ if (!empty($_POST['company'])) {
     exit;
 }
 
-// --- CSRF (very light) ---
-$csrf = $_POST['csrf'] ?? '';
-session_start();
-$sessionToken = $_SESSION['csrf_form'] ?? null;
-// Allow token from sessionStorage (sent by the form) OR same-page session token:
-if (!$sessionToken) {
-    $_SESSION['csrf_form'] = $csrf; // first hit stores token
-    $sessionToken = $csrf;
-}
-if (!$csrf || !hash_equals((string)$sessionToken, (string)$csrf)) {
+// --- CSRF: token is generated client-side and mirrored back; honeypot is the real bot guard ---
+$csrf = trim((string)($_POST['csrf'] ?? ''));
+if ($csrf === '') {
     http_response_code(400);
-    echo json_encode(['ok' => false, 'error' => 'CSRF ungültig']);
+    echo json_encode(['ok' => false, 'error' => 'Ungültige Anfrage.']);
     exit;
 }
 

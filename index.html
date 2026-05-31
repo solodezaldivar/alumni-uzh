@@ -71,12 +71,12 @@
 
             <h2>Über uns</h2>
             <p>
-                Seit 1997 verbindet der UZH Alumni Informatik (UZH.AI) Ehemalige, Studierende und das
+                Seit 1997 verbindet der UZH Alumni Informatik Ehemalige, Studierende und das
                 <a href="https://www.ifi.uzh.ch" target="_blank" rel="noopener">Institut für Informatik</a>.
                 Wir fördern Vernetzung, Mentoring und lebenslanges Lernen durch Events, Inhalte und Partnerschaften.
             </p>
             <p>
-                Sind Sie interessiert, mit dem UZH.AI eine Partnerschaft oder eine Sponsoringzusage zu tätigen?
+                Sind Sie interessiert, mit dem UZH Alumni Informatik eine Partnerschaft oder eine Sponsoringzusage zu tätigen?
                 Dann senden Sie uns eine <a href="#contact">E-Mail</a>.
             </p>
 
@@ -95,37 +95,72 @@
         <div class="section-head events-head">
             <div>
                 <h2>Events</h2>
-                <p class="muted">Bevorstehende Anlässe</p>
+                <p class="muted">Unsere Anlässe</p>
             </div>
-
         </div>
 
         <article class="card events-card">
+
+            <!-- Toolbar: Toggle links, Suche rechts -->
             <div class="events-toolbar">
-                <div class="muted" id="eventsCount">—</div>
+                <div class="org-tabs events-tabs" role="tablist" aria-label="Events Tabs">
+                    <button class="tab active" role="tab" aria-selected="true"
+                            aria-controls="events-panel-upcoming" id="et-upcoming">
+                        Bevorstehende
+                    </button>
+                    <button class="tab" role="tab" aria-selected="false"
+                            aria-controls="events-panel-past" id="et-past">
+                        Vergangene
+                    </button>
+                </div>
                 <div class="events-search">
                     <input id="eventsQ" type="search" placeholder="Suche nach Titel, Ort, Datum …"
                            aria-label="Events-Suche">
                 </div>
             </div>
 
-            <div class="events-table-wrap">
-                <table class="events-table" aria-label="Bevorstehende Events">
-                    <thead>
-                    <tr>
-                        <th style="width:220px">Datum / Zeit</th>
-                        <th>Event</th>
-                        <th style="width:280px">Ort</th>
-                        <th style="width:260px">Bemerkungen</th>
-                    </tr>
-                    </thead>
-                    <tbody id="eventsTbody">
-                    <tr>
-                        <td colspan="4" class="muted" style="padding:14px">Lade Events …</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <!-- Upcoming -->
+            <div id="events-panel-upcoming" role="tabpanel" aria-labelledby="et-upcoming">
+                <div class="events-table-wrap">
+                    <table class="events-table" aria-label="Bevorstehende Events">
+                        <thead>
+                        <tr>
+                            <th style="width:220px">Datum / Zeit</th>
+                            <th>Event</th>
+                            <th style="width:280px">Ort</th>
+                            <th style="width:260px">Bemerkungen</th>
+                        </tr>
+                        </thead>
+                        <tbody id="eventsTbody">
+                        <tr>
+                            <td colspan="4" class="muted" style="padding:14px">Lade Events …</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+            <!-- Past -->
+            <div id="events-panel-past" class="hidden" role="tabpanel" aria-labelledby="et-past">
+                <div class="events-table-wrap">
+                    <table class="events-table" aria-label="Vergangene Events">
+                        <thead>
+                        <tr>
+                            <th style="width:220px">Datum / Zeit</th>
+                            <th>Event</th>
+                            <th style="width:280px">Ort</th>
+                            <th style="width:260px">Bemerkungen</th>
+                        </tr>
+                        </thead>
+                        <tbody id="eventsTbodyPast">
+                        <tr>
+                            <td colspan="4" class="muted" style="padding:14px">Lade Events …</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </article>
     </div>
 </section>
@@ -215,7 +250,7 @@
                             <img class="person-photo" src="uploads/vorstand/marc.jpg" alt="Marc-Andre Pradervand"
                                  loading="lazy">
                             <div class="person-body">
-                                <div class="person-name">Marc-Andre Pradervand</div>
+                                <div class="person-name">Marc-André Pradervand</div>
                                 <div class="person-role">Co-Präsident</div>
                                 <div class="person-meta">Abschlussdaten: M87/P95</div>
                             </div>
@@ -326,22 +361,22 @@
                     <div class="zweck-grid">
                         <div>
                             <p class="muted">
-                                Die UZH Alumni Informatik (UZH.AI) wurde 1997 gegründet und war 2006 Mitgründerin des
+                                Die UZH Alumni Informatik wurde 1997 gegründet und war 2006 Mitgründerin des
                                 Dachverbandes der Alumni-Organisationen der Universität Zürich.
                             </p>
                             <p class="muted">Der Verein richtet sich an alle Absolventinnen und Absolventen eines
                                 Informatikstudiums an der Universität Zürich sowie an promovierte Forschende des
-                                Instituts für Informatik (IfI). Ziel der UZH.AI ist es:</p>
+                                Instituts für Informatik (IfI). Ziel der UZH Alumni Informatik ist es:</p>
                             <ul class="checklist">
                                 <li>Kontaktpflege unter ehemaligen Studentinnen und Studenten (engl. alumni) nach dem
                                     Abschluss des Studiums oder des Doktorats und Aufbau einer Plattform für
                                     Erfahrungsaustausch, Networking, Karriereförderung und gesellschaftliche Anlässe.
                                 </li>
-                                <li>Förderung des Ansehens der UZH.AI Studiengänge in der Öffentlichkeit und damit des
+                                <li>Förderung des Ansehens der Informatik Studiengänge in der Öffentlichkeit und damit des
                                     Ansehens der Universität Zürich (UZH), des Instituts für Informatik (IfI) und der
                                     wirtschaftswissenschaftlichen Fakultät (WWF) und der UZH Alumni-Gemeinde
                                 </li>
-                                <li>Unterstützung des akademischen Nachwuchses in den UZH.AI-Studiengängen.</li>
+                                <li>Unterstützung des akademischen Nachwuchses in den Informatik-Studiengängen.</li>
                                 <li>Vernetzung von Alumni & IfI</li>
                             </ul>
                         </div>
@@ -378,7 +413,7 @@
             </div>
             <div class="sponsor-card">
                 <a href="https://www.migrosbank.ch/" target="_blank" rel="noopener" title="Migros Bank – Website öffnen" class="sponsor-logo-link">
-                    <img src="uploads/logos/logo_migrosbank.png" alt="Migros Bank"/>
+                    <img src="uploads/logos/MigrosBank_H_Orange-Pink_CMYK.png" alt="Migros Bank"/>
                 </a>
                 <p class="sponsor-desc">Der Migros-Gründer Gottlieb Duttweiler legte der Migros Bank bereits 1958 seine einzigartige Werthaltung zugrunde: den Menschen statt das Kapital ins Zentrum zu stellen. Seitdem ist es ihr Ziel, Menschen, die ideal mit ihrem Geld umgehen wollen, überzeugende Lösungen anzubieten. Die Migros Bank ist die menschliche Bank – auch für IT-Fachkräfte.</p>
                 <a href="https://www.migrosbank.ch/" target="_blank" rel="noopener" class="sponsor-link">www.migrosbank.ch</a>
@@ -541,10 +576,10 @@
         const data = new FormData(form);
         try {
             const res = await fetch(form.action, {method: 'POST', body: data});
-            if (!res.ok) throw new Error('Server error');
-            const json = await res.json();
+            let json;
+            try { json = await res.json(); } catch { json = null; }
 
-            if (json.ok) {
+            if (json && json.ok) {
                 status.textContent = 'Danke! Wir melden uns.';
                 status.className = 'success-text';
                 form.reset();
@@ -553,12 +588,16 @@
                 const t = Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
                 document.getElementById('csrf').value = t;
                 sessionStorage.setItem('csrf', t);
-            } else {
-                status.textContent = json.error || 'Senden fehlgeschlagen.';
+            } else if (json && json.error) {
+                status.textContent = json.error;
                 status.className = 'error-text';
+            } else {
+                status.textContent = `Senden fehlgeschlagen (HTTP ${res.status}). Bitte versuchen Sie es erneut.`;
+                status.className = 'error-text';
+                console.error('Contact form error', res.status, json);
             }
         } catch (err) {
-            status.textContent = 'Netzwerkfehler. Bitte versuchen Sie es erneut.';
+            status.textContent = 'Netzwerkfehler. Bitte prüfen Sie Ihre Verbindung und versuchen Sie es erneut.';
             status.className = 'error-text';
             console.error(err);
         }
@@ -695,8 +734,10 @@
 
     // ===== Tabs for Organisation =====
     (function tabs() {
-        const buttons = document.querySelectorAll('.org-tabs .tab');
-        const panels = document.querySelectorAll('.org-panel');
+        const orgCard = document.querySelector('.org-card');
+        if (!orgCard) return;
+        const buttons = orgCard.querySelectorAll('.org-tabs .tab');
+        const panels  = orgCard.querySelectorAll('.org-panel');
 
         function activate(id) {
             buttons.forEach(b => {
@@ -710,99 +751,108 @@
         buttons.forEach(b => b.addEventListener('click', () => activate(b.id)));
     })();
 
-    /* ===== Events (CSV via API) ===== */
+    /* ===== Events (Tabs + geteilte Suche) ===== */
     (async function eventsSection() {
-        const tbody = document.getElementById('eventsTbody');
-        const countEl = document.getElementById('eventsCount');
-        const q = document.getElementById('eventsQ');
+        const btnUpcoming  = document.getElementById('et-upcoming');
+        const btnPast      = document.getElementById('et-past');
+        const panelUp      = document.getElementById('events-panel-upcoming');
+        const panelPast    = document.getElementById('events-panel-past');
+        const tbodyUp      = document.getElementById('eventsTbody');
+        const tbodyPast    = document.getElementById('eventsTbodyPast');
+        const q            = document.getElementById('eventsQ');
+        if (!btnUpcoming || !tbodyUp || !q) return;
 
-        // If section not present on some pages, do nothing
-        if (!tbody || !countEl || !q) return;
-
-        let all = [];
+        let dataUp   = [];
+        let dataPast = [];
+        let activeTab = 'upcoming';
 
         function esc(s) {
-            const div = document.createElement('div');
-            div.textContent = String(s ?? '');
-            return div.innerHTML;
+            const d = document.createElement('div');
+            d.textContent = String(s ?? '');
+            return d.innerHTML;
         }
 
-        function norm(s) {
-            return String(s ?? '').toLowerCase().trim();
+        function norm(s) { return String(s ?? '').toLowerCase().trim(); }
+
+        function renderInto(tbody, items, emptyMsg) {
+            if (!items.length) {
+                tbody.innerHTML = `<tr><td colspan="4" class="muted" style="padding:14px">${emptyMsg}</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = items.map(e => {
+                const meta = [];
+                if (e.kind === 'readme') meta.push('<span class="badge badge-soft">Readme</span>');
+                const notesHtml = e.notes
+                    ? `<span class="events-notes">${esc(e.notes)}</span>`
+                    : `<span class="muted">—</span>`;
+                return `
+          <tr>
+            <td class="events-dt" data-label="Datum / Zeit">
+              <div class="events-dt-main">${esc(e.datetime_text || `${e.date_text || '—'} · ${e.time_text || '—'}`)}</div>
+              ${meta.length ? `<div class="events-dt-sub">${meta.join(' ')}</div>` : ''}
+            </td>
+            <td class="events-title" data-label="Event">${esc(e.title || '')}</td>
+            <td class="events-loc"   data-label="Ort">${esc(e.location || '—')}</td>
+            <td class="events-notes-cell" data-label="Bemerkungen">${notesHtml}</td>
+          </tr>`;
+            }).join('');
+        }
+
+        function filtered(data) {
+            const term = norm(q.value);
+            return term
+                ? data.filter(e =>
+                    norm(`${e.datetime_text ?? ''} ${e.title ?? ''} ${e.location ?? ''} ${e.notes ?? ''} ${e.date_text ?? ''} ${e.time_text ?? ''}`)
+                        .includes(term))
+                : data.slice();
         }
 
         function render() {
-            const term = norm(q.value);
-
-            const items = term
-                ? all.filter(e =>
-                    norm(
-                        `${e.datetime_text ?? ''} ${e.title ?? ''} ${e.location ?? ''} ${e.notes ?? ''} ${e.date_text ?? ''} ${e.time_text ?? ''}`
-                    ).includes(term)
-                )
-                : all.slice();
-
-            if (!items.length) {
-                tbody.innerHTML =
-                    `<tr><td colspan="4" class="muted" style="padding:14px">Keine passenden Events gefunden.</td></tr>`;
-                countEl.textContent = '0 Events';
-                return;
+            if (activeTab === 'upcoming') {
+                renderInto(tbodyUp, filtered(dataUp), 'Keine passenden Events gefunden.');
+            } else {
+                renderInto(tbodyPast, filtered(dataPast), 'Keine vergangenen Events gefunden.');
             }
-
-            tbody.innerHTML = items
-                .map(e => {
-                    const meta = [];
-                    if (e.kind === 'readme') meta.push('<span class="badge badge-soft">Readme</span>');
-
-                    const notesHtml = e.notes
-                        ? `<span class="events-notes">${esc(e.notes)}</span>`
-                        : `<span class="muted">—</span>`;
-
-                    return `
-          <tr>
-            <td class="events-dt" data-label="Datum / Zeit">
-              <div class="events-dt-main">${
-                        esc(e.datetime_text || `${e.date_text || '—'} · ${e.time_text || '—'}`)
-                    }</div>
-              ${meta.length ? `<div class="events-dt-sub">${meta.join(' ')}</div>` : ''}
-            </td>
-
-            <td class="events-title" data-label="Event">${esc(e.title || '')}</td>
-            <td class="events-loc" data-label="Ort">${esc(e.location || '—')}</td>
-            <td class="events-notes-cell" data-label="Bemerkungen">${notesHtml}</td>
-          </tr>
-        `;
-                })
-                .join('');
-
-            countEl.textContent = `${items.length} Event${items.length === 1 ? '' : 's'}`;
         }
 
-        async function load() {
-            try {
-                const res = await fetch('api/events_from_csv.php?upcoming=1', {cache: 'no-store'});
-                if (!res.ok) throw new Error('HTTP ' + res.status);
+        function activateTab(tab) {
+            activeTab = tab;
+            const isUp = tab === 'upcoming';
+            btnUpcoming.classList.toggle('active', isUp);
+            btnUpcoming.setAttribute('aria-selected', String(isUp));
+            btnPast.classList.toggle('active', !isUp);
+            btnPast.setAttribute('aria-selected', String(!isUp));
+            panelUp.classList.toggle('hidden', !isUp);
+            panelPast.classList.toggle('hidden', isUp);
+            q.value = '';
+            render();
+        }
 
+        async function loadData(url, tbody, errMsg) {
+            try {
+                const res  = await fetch(url, {cache: 'no-store'});
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const json = await res.json();
                 if (!json.ok) throw new Error(json.error || 'API error');
-
-                all = Array.isArray(json.items) ? json.items : [];
-                render();
+                return Array.isArray(json.items) ? json.items : [];
             } catch (err) {
                 console.error(err);
-                tbody.innerHTML =
-                    `<tr><td colspan="4" class="muted" style="padding:14px">Events konnten nicht geladen werden.</td></tr>`;
-                countEl.textContent = '—';
+                tbody.innerHTML = `<tr><td colspan="4" class="muted" style="padding:14px">${errMsg}</td></tr>`;
+                return [];
             }
         }
 
-        let t;
-        q.addEventListener('input', () => {
-            clearTimeout(t);
-            t = setTimeout(render, 120);
-        });
+        btnUpcoming.addEventListener('click', () => activateTab('upcoming'));
+        btnPast.addEventListener('click',     () => activateTab('past'));
 
-        await load();
+        let t;
+        q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(render, 120); });
+
+        [dataUp, dataPast] = await Promise.all([
+            loadData('api/events_from_csv.php?upcoming=1', tbodyUp,   'Events konnten nicht geladen werden.'),
+            loadData('api/events_from_csv.php?past=1',     tbodyPast, 'Events konnten nicht geladen werden.'),
+        ]);
+        render();
     })();
 </script>
 </body>

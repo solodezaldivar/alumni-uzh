@@ -1608,6 +1608,11 @@ body.admin {
    Keep this as the ONLY events table styling block.
 ========================================================= */
 
+/* Toggle in toolbar: kein Margin, da Toolbar das Spacing übernimmt */
+.events-toolbar .org-tabs {
+    margin: 0;
+}
+
 /* Card wrapper */
 #events .events-card.card,
 .events-card.card {

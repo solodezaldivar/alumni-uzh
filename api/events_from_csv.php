@@ -87,6 +87,7 @@ $csvPath = resolveCsv();
 if (!$csvPath) out(['ok' => false, 'error' => 'CSV nicht gefunden'], 404);
 
 $upcoming = (string)($_GET['upcoming'] ?? '') === '1';
+$past     = (string)($_GET['past']     ?? '') === '1';
 $query = norm((string)($_GET['q'] ?? ''));
 
 $fh = fopen($csvPath, 'rb');
@@ -116,10 +117,13 @@ while (($row = fgetcsv($fh, 0, ';', '"', '\\')) !== false) {
 
     if ($dateText === '' && $title === '' && $loc === '') continue;
 
-    // upcoming filter: only if we can parse date. If not parseable, keep it (safer).
+    // upcoming / past filter: only if we can parse date. If not parseable, keep it (safer).
     $dt = parseDateText($dateText);
     if ($upcoming && $dt instanceof DateTimeImmutable) {
         if ($dt->getTimestamp() < $todayTs) continue;
+    }
+    if ($past && $dt instanceof DateTimeImmutable) {
+        if ($dt->getTimestamp() >= $todayTs) continue;
     }
 
     // sort timestamp (best effort)
@@ -155,9 +159,11 @@ while (($row = fgetcsv($fh, 0, ';', '"', '\\')) !== false) {
 
 fclose($fh);
 
-// If we have timestamps, sort ascending; if not, keep stable order
-usort($items, function ($a, $b) {
-    return ($a['ts'] ?? 0) <=> ($b['ts'] ?? 0);
+// Past events: newest first; upcoming/all: ascending
+usort($items, function ($a, $b) use ($past) {
+    return $past
+        ? ($b['ts'] ?? 0) <=> ($a['ts'] ?? 0)
+        : ($a['ts'] ?? 0) <=> ($b['ts'] ?? 0);
 });
 
 out([
